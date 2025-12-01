@@ -1,0 +1,49 @@
+.event-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ddd; /* adjust */
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.event-card__image-wrapper {
+  width: 100%;
+  height: 200px; /* adjust */
+  overflow: hidden;
+}
+
+.event-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.event-card__body {
+  padding: 16px;
+}
+
+.event-card__title {
+  font-size: 24px;
+  margin: 0 0 8px 0;
+  color: #333;
+}
+
+.event-card__date,
+.event-card__location {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.event-card__description {
+  font-size: 16px;
+  color: #444;
+  margin-top: 12px;
+}

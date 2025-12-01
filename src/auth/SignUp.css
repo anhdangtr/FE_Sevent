@@ -1,0 +1,102 @@
+/* Container flex 2 cột full height */
+.signup-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: #e9f6f2; /* subtle background behind panels */
+}
+
+/* Left panel: chỉ hiển thị bên trái */
+.signup-left-panel {
+  /* left panel blue */
+  width: 42%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 3.5rem 3rem;
+  color: white;
+  background: linear-gradient(180deg, #0088FF 0%, #108efc 100%); /* primary blue */
+}
+
+/* Logo */
+.signup-logo {
+  width: 15rem;
+  margin-bottom: 1rem;
+  margin-left: 0.25rem;
+  margin-top: 0.5rem; /* keep it near top-left */
+}
+
+/* Title */
+.signup-title {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.05;
+  margin-top: 0.25rem; /* lift the title upward */
+}
+
+/* Right panel: chiếm 1/2 bên phải */
+.signup-right-panel {
+  width: 58%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:#d0e6f9; /* panel is white box inside */
+}
+
+.signup-right-panel .right-card {
+  background: white;
+  width: 100%;
+  max-width: 520px;
+  padding: 2.25rem;
+  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+  box-shadow: 0 6px 18px rgba(10, 10, 10, 0.06);
+}
+
+/* Form styling */
+.signup-form {
+  width: 100%;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Label trên input */
+.signup-form label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  text-align: left;
+}
+
+/* Input box */
+.signup-form input {
+  width: 100%;
+  padding: 0.9rem 1rem;
+  margin-bottom: 1.25rem;
+  border: 1px solid #d7d7d7;
+  border-radius: 10px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* Button Create Account */
+.signup-form button {
+  width: 100%;
+  padding: 0.9rem;
+  background-color: #2D2C3C;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 0.5rem;
+}
+
+.create-heading {
+  color: #2D2C3C;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-align: left;
+}

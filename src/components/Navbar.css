@@ -1,0 +1,143 @@
+/* Navbar styling (Navbar.css) */
+
+/* General navbar container */
+.navbar {
+  width: 100%; /* Full width */
+  background-color: #0088ff; /* Top bar color */
+  color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); /* Shadow below the navbar */
+  display: flex; /* Use Flexbox to align items */
+  justify-content: space-between; /* Align logo on the left and buttons on the right */
+  padding: 12px 20px; /* Padding inside the navbar */
+  align-items: center; /* Vertically center content */
+  height: 80px; /* Set a fixed height for the navbar */
+}
+
+/* Navbar container to center content and apply padding */
+.navbar-container {
+  display: flex; /* Use flexbox */
+  align-items: center; /* Vertically center the content */
+  justify-content: space-between; /* Push logo to the left and buttons to the right */
+  width: 100%; /* Ensure the container takes up the full width */
+  max-width: 1200px; /* Optional: limit the width */
+  margin: 0 auto; /* Center the container */
+}
+
+/* Navbar logo (aligned left) */
+.navbar-logo {
+  display: flex; /* Ensure it's a flex container */
+  align-items: center; /* Center logo vertically */
+}
+
+.navbar-logo img {
+  height: 50px; /* Adjust logo height */
+  width: auto;  /* Maintain aspect ratio */
+}
+
+/* Navbar links container (centered within the navbar) */
+.nav-links {
+  list-style: none; /* Remove default list styling */
+  display: flex; /* Use flex to align links horizontally */
+  gap: 36px; /* Space between links */
+  margin: 0;
+  padding: 0;
+}
+
+/* Styling for each individual nav link */
+.nav-link {
+  background: transparent; /* Transparent background */
+  border: none; /* No border */
+  color: white; /* White text */
+  font-weight: 700; /* Bold text */
+  font-size: 16px; /* Set font size */
+  cursor: pointer; /* Pointer cursor */
+  padding: 6px 8px; /* Padding inside each link */
+  position: relative; /* Required for the active link underline */
+  transition: transform 0.3s ease, color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Active navbar link underline (smaller and closer to the text) */
+.nav-link.active::after {
+  content: ''; /* Create an underline */
+  position: absolute; /* Position it absolutely */
+  left: 0;
+  right: 0;
+  bottom: -4px; /* Closer to the text */
+  height: 2px; /* Smaller underline */
+  background: #FFE047; /* Yellow underline */
+  border-radius: 2px; /* Rounded corners for the underline */
+}
+
+.nav-link-item {
+  color: white;              /* Default white */
+  font-size: 16px;
+  transition: all 0.25s ease;
+  padding: 6px 10px;
+  display: inline-block;
+}
+
+/* Hover effect */
+.nav-link-item:hover {
+  transform: scale(1.12);    /* Slight enlarge */
+  color: #ffea70;            /* Soft yellow on hover */
+}
+
+/* Active (currently selected page) */
+.nav-link-item.active {
+  color: #ffea70;            /* Highlight color for active item */
+  font-weight: 600;
+  transform: scale(1.15);    /* Slightly bigger than hover */
+  border-bottom: 3px solid #ffea70; 
+  padding-bottom: 4px;
+}
+
+/* Hover effect: Highlight and enlarge text */
+.nav-link:hover {
+  color: #FFE047; /* Highlight text with yellow */
+  transform: scale(1.1); /* Slightly enlarge the text */
+}
+
+/* Login and Sign Up buttons container (aligned right) */
+.auth-buttons {
+  display: flex; /* Use flex to arrange buttons horizontally */
+  gap: 12px; /* Space between the buttons */
+  align-items: center; /* Center the buttons vertically */
+}
+
+/* Styling for Login button */
+.login-btn {
+  background: #004AAD; /* Blue background for login button */
+  color: white; /* White text */
+  padding: 8px 14px; /* Padding inside the button */
+  border-radius: 8px; /* Rounded corners */
+  border: none; /* Remove the border */
+  font-weight: 700; /* Bold text */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Add transition for hover effect */
+}
+
+/* Hover effect for the Login button */
+.login-btn:hover {
+  background-color: #003A8C; /* Darken blue on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+/* Styling for SignUp button */
+.signup-btn {
+  background: #FFE047; /* Yellow background for sign-up button */
+  color: white; /* White text */
+  padding: 8px 14px; /* Padding inside the button */
+  border-radius: 8px; /* Rounded corners */
+  border: none; /* Remove the border */
+  font-weight: 700; /* Bold text */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease; /* Add transition for hover effect */
+}
+
+/* Hover effect for the SignUp button */
+.signup-btn:hover {
+  background-color: #FFBB33; /* Darken yellow on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
