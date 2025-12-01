@@ -1,78 +1,140 @@
-import React, { useState } from 'react';
-import logoImage from '../assets/official_logo_white.png'; // Adjust the path to your logo image 
-import { Link, useLocation } from 'react-router-dom';  // Import Link and useLocation from react-router-dom
-import './Navbar.css'; // Import the Navbar CSS
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import logoImage from "../assets/logo.png";
+import "./Navbar.css";
 
-function Navbar() {
-  const [activeNav, setActiveNav] = useState('home'); // Track the active navigation state
-  const location = useLocation(); // Get the current URL location
+const Navbar = ({ activeNav, setActiveNav }) => {
+  const navigate = useNavigate();
+  const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const isLoggedIn = !!localStorage.getItem("authToken");
 
-  // Update the active link based on the current URL
-  React.useEffect(() => {
-    const path = location.pathname; // Get current path from location
-    if (path === "/") {
-      setActiveNav('home');
-    } else if (path === "/about") {
-      setActiveNav('about');
-    } else if (path === "/contact") {
-      setActiveNav('contact');
-    }
-  }, [location]);
+  const handleNavClick = (nav, path) => {
+    setActiveNav(nav);
+    if (path) navigate(path);
+  };
 
-  const handleChange = (event) => {
-      if(event === "LogIn")
-        window.location.href='/auth/LogIn';
-      else if (event === "SignUp")
-        window.location.href ='/auth/SignUp';
-  }
+  const toggleAvatarMenu = () => setShowAvatarMenu((s) => !s);
+  const closeAvatarMenu = () => setShowAvatarMenu(false);
 
   return (
-   <div className="navbar">
+    <nav className="navbar">
       <div className="navbar-container">
-        {/* Logo on the left */}
+        {/* Logo bên trái */}
         <div className="navbar-logo">
-          <img src={logoImage} alt="Logo" />
+          <img src={logoImage} alt="S Event Logo" />
         </div>
 
-        {/* Navbar Links */}
+        {/* Menu căn giữa */}
         <ul className="nav-links">
-          <li className="nav-link">
-            <Link
-              to="/"
-              className={`nav-link-item ${activeNav === 'home' ? 'active' : ''}`}
-              onClick={() => setActiveNav('home')}
+          <li>
+            <button
+              className={`nav-link ${activeNav === "home" ? "active" : ""}`}
+              onClick={() => handleNavClick("home", "/")}
             >
               Home
-            </Link>
+            </button>
           </li>
-          <li className="nav-link">
-            <Link
-              to="/about"
-              className={`nav-link-item ${activeNav === 'about' ? 'active' : ''}`}
-              onClick={() => setActiveNav('about')}
+          <li>
+            <button
+              className={`nav-link ${activeNav === "about" ? "active" : ""}`}
+              onClick={() => handleNavClick("about", "/about")}
             >
               About
-            </Link>
+            </button>
           </li>
-          <li className="nav-link">
-            <Link
-              to="/contact"
-              className={`nav-link-item ${activeNav === 'contact' ? 'active' : ''}`}
-              onClick={() => setActiveNav('contact')}
+          <li>
+            <button
+              className={`nav-link ${activeNav === "contact" ? "active" : ""}`}
+              onClick={() => handleNavClick("contact", "/contact")}
             >
               Contact
-            </Link>
+            </button>
           </li>
         </ul>
 
-        {/* Authentication Buttons */}
+        {/* Nút bên phải: Login / Sign up hoặc Avatar */}
         <div className="auth-buttons">
-          <button className="login-btn" onClick={()=>handleChange("LogIn")}>Log In</button>
-          <button className="signup-btn" onClick={() => handleChange("SignUp")}>Sign Up</button>
+          {!isLoggedIn ? (
+            <>
+              <button
+                className="login-btn"
+                onClick={() => navigate("/auth/LogIn")}
+              >
+                Login
+              </button>
+              <button
+                className="signup-btn"
+                onClick={() => navigate("/auth/SignUp")}
+              >
+                Sign up
+              </button>
+            </>
+          ) : (
+            <div style={{ position: "relative" }}>
+              <button
+                className="login-btn"
+                onClick={toggleAvatarMenu}
+                aria-haspopup="true"
+                aria-expanded={showAvatarMenu}
+              >
+                <span
+                  style={{
+                    display: "inline-block",
+                    width: 28,
+                    height: 28,
+                    borderRadius: "50%",
+                    background: "#fff",
+                    marginRight: 8
+                  }}
+                />
+              </button>
+              {showAvatarMenu && (
+                <div className="avatar-menu" onMouseLeave={closeAvatarMenu}>
+                  <button
+                    className="avatar-menu-item"
+                    onClick={() => {
+                      navigate("/interests");
+                      closeAvatarMenu();
+                    }}
+                  >
+                    Interesting event
+                  </button>
+                  <button
+                    className="avatar-menu-item"
+                    onClick={() => {
+                      navigate("/saved");
+                      closeAvatarMenu();
+                    }}
+                  >
+                    Saved event
+                  </button>
+                  <button
+                    className="avatar-menu-item"
+                    onClick={() => {
+                      navigate("/reminders");
+                      closeAvatarMenu();
+                    }}
+                  >
+                    Reminders
+                  </button>
+                  <button
+                    className="avatar-menu-item"
+                    onClick={() => {
+                      localStorage.removeItem("authToken");
+                      localStorage.removeItem("user");
+                      window.location.reload();
+                    }}
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
-    </div>
+    </nav>
   );
-}
+};
 
 export default Navbar;
