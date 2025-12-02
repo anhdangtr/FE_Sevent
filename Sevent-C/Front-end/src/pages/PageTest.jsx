@@ -139,6 +139,7 @@ return (
     <section className="events-section">
       <div className="container">
         {page === 1 && !search && (
+
           <div className="filters">
             <label htmlFor="category" className="category-label">
               Explore categories
