@@ -1,0 +1,30 @@
+.time-roll-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.time-roll {
+  width: 50;
+  height: 30;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 12px;
+  border: 1px solid #dcdcdc;
+  background-color: #fff;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  text-align: center;
+}
+
+.time-roll option {
+  font-size: 16px;
+  padding: 8px 2;
+  scroll-snap-align: center;
+}
+
+.time-separator {
+  font-size: 16px;
+  font-weight: bold;
+}

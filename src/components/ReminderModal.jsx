@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ReminderModal.css';
+import TimeRollPicker from './TimeRollPicker';
 
 const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -35,9 +36,25 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     }
   };
 
-  const handleDateSelect = (day) => {
+  // Check if day is in the past
+  const isPastDate = (day) => {
     const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    setSelectedDate(date);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    return date < today;
+  };
+
+  const handleDateSelect = (day) => {
+    const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+    selected.setHours(0, 0, 0, 0);
+
+    if (selected < today) return; 
+
+    setSelectedDate(selected);
   };
 
   const handlePrevMonth = () => {
@@ -63,6 +80,12 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     const reminderDateTime = new Date(selectedDate);
     const [hours, minutes] = selectedTime.split(':');
     reminderDateTime.setHours(parseInt(hours), parseInt(minutes));
+
+        // Validate future time
+    if (reminderDateTime <= new Date()) {
+      setError('Vui lòng chọn thời gian trong tương lai');
+      return;
+    }
 
     const isDuplicate = reminders.some(r => {
       const rDate = new Date(r.reminderDateTime);
@@ -130,12 +153,19 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     // Days of month
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      date.setHours(0, 0, 0, 0);
+
       const isSelected = selectedDate && selectedDate.toDateString() === date.toDateString();
+      const isPast = date < today;
+
       days.push(
         <button
           key={i}
-          className={`calendar-day ${isSelected ? 'selected' : ''}`}
-          onClick={() => handleDateSelect(i)}
+          className={`calendar-day ${isSelected ? 'selected' : ''} ${isPast ? 'disabled' : ''}`}
+          onClick={() => !isPast && handleDateSelect(i)}
+          disabled={isPast}
         >
           {i}
         </button>
@@ -231,11 +261,10 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
 
             <div className="time-picker-container">
               <label>Giờ</label>
-              <select value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} className="time-select">
-                {renderTimeOptions().map(time => (
-                  <option key={time} value={time}>{time}</option>
-                ))}
-              </select>
+              <TimeRollPicker
+                value={selectedTime}
+                onChange={(val) => setSelectedTime(val)}
+              />
             </div>
 
             {selectedDate && (
