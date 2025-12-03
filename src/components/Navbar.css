@@ -1,3 +1,316 @@
+<<<<<<< HEAD
+/* Main navbar bar – full width, blue background, sticky at top */
+.navbar {
+  width: 100%;                                    /* Takes full width of screen */
+  height : 60px; 
+  background: #0088ff;                            /* Main blue color */
+  color: white;                                   /* Text color for all children */
+  box-shadow: 0 4px 20px rgba(0, 136, 255, 0.25); /* Soft shadow below navbar */
+  position: sticky;                               /* Sticks to top when scrolling */
+  top: 0;                                         /* Sticks exactly at the top */
+  z-index: 1000;                                  /* Always on top of other elements */
+}
+
+/* Inner container that holds logo + menu + buttons */
+.navbar-container {
+  width: 100vw;                                   /* Full viewport width (fixes edge issues) */
+  height: 50px;                                   /* Fixed height for consistent layout */
+  margin: 0 auto;                                 /* Centers content horizontally */
+  padding: 16px 24px;                             /* Inner spacing left/right */
+  display: flex;                                  /* Flexbox for perfect alignment */
+  align-items: center;                            /* Vertically center all items */
+  justify-content: space-between;                 /* Logo left, Menu center, Buttons right */
+  gap: 24px;                                      /* Space between the three main parts */
+  position: relative;                             /* Needed for dropdown positioning */
+}
+
+/* Logo area on the left */
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;                    /* Khoảng cách đẹp giữa hình và chữ */
+  flex-shrink: 0;                 /* Không bao giờ bị co lại */
+  margin-right: auto;           /* Đẩy menu + button sang phải → logo luôn cố định trái */
+  transition: transform 0.35s ease;
+  cursor: pointer;
+}
+
+.navbar-logo:hover {
+  transform: scale(1.08);                         /* Slightly enlarge on hover */
+}
+
+.navbar-logo img {
+  height: 78px;                                   /* Logo image height - larger */
+  width: auto;                                    /* Maintain aspect ratio */
+  border-radius: 12px;                             /* Rounded corners */
+  object-fit: contain;                            /* Prevent stretching */
+}
+
+/* Desktop navigation links – perfectly centered in the middle */
+.nav-links {
+  flex: 1;                                        /* Take all available space in the center */
+  display: flex;                                  /* Horizontal layout */
+  justify-content: center;                        /* Perfectly centered */
+  align-items: center;                           /* Vertically centered */
+  gap: 48px;                                      /* Large space between links */
+  list-style: none;                               /* Remove bullets */
+  margin: 0;                                      /* Reset default margin */
+  padding: 0;                                     /* Reset default padding */
+}
+
+/* Individual navigation buttons (Home, About, Contact) */
+.nav-link {
+  color: white;                                   /* White text */
+  background: none;                               /* Transparent background */
+  border: none;                                   /* No border */
+  font-weight: 700;                               /* Bold text */
+  font-size: 15px;                                /* Readable size */
+  text-transform: uppercase;                      /* Uppercase for modern look */
+  letter-spacing: 0.8px;                          /* Professional spacing */
+  cursor: pointer;                                /* Hand cursor on hover */
+  padding: 8px 12px;                              /* Clickable area */
+  position: relative;                             /* For pseudo-element underline */
+  transition: all 0.3s ease;                      /* Smooth hover effects */
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);                    /* Lift effect on hover */
+  opacity: 0.9;                                   /* Slight fade for polish */
+}
+
+/* Active page indicator – yellow underline */
+.nav-link.active::after {
+  content: "";                                    /* Create pseudo-element */
+  position: absolute;                             /* Position under text */
+  left: 50%;                                      /* Start from center */
+  bottom: -8px;                                   /* 8px below text */
+  transform: translateX(-50%);                    /* Perfect centering */
+  width: 70%;                                     /* Not full width – looks elegant */
+  height: 4px;                                    /* Thick line */
+  background: #ffe047;                            /* Yellow accent color */
+  border-radius: 2px;                             /* Rounded ends */
+}
+
+/* Right side container for buttons or avatar */
+.auth-buttons {
+  display: flex;                                  /* Horizontal layout */
+  align-items: center;                            /* Vertically center */
+  gap: 80px;                                      /* Increased space between Log in and Sign up */
+  flex-shrink: 0;                                 /* Never shrink */
+}
+
+/* Shared styles for Login and Sign Up buttons */
+.login-btn,
+.signup-btn {
+  padding: 10px 20px;                             /* Comfortable padding */
+  border-radius: 10px;                            /* Modern rounded corners */
+  font-weight: 700;                               /* Bold text */
+  font-size: 14px;                                /* Clear readable size */
+  text-transform: uppercase;                      /* Uppercase style */
+  letter-spacing: 0.6px;                          /* Professional spacing */
+  cursor: pointer;                                /* Hand cursor */
+  transition: all 0.3s ease;                      /* Smooth hover transition */
+  border: 2px solid transparent;                  /* For hover border effect */
+}
+
+/* Login button – glassmorphism style */
+.login-btn {
+  background: rgba(255, 255, 255, 0.2);           /* Semi-transparent white */
+  color: white;                                   /* White text */
+  backdrop-filter: blur(10px);                    /* Frosted glass effect */
+}
+
+/* Sign Up button – solid yellow */
+.signup-btn {
+  background: #ffe047;                            /* Bright yellow background */
+  color: #0088ff;                                 /* Dark blue text for contrast */
+}
+
+/* Hover state – both buttons turn red */
+.login-btn:hover,
+.signup-btn:hover {
+  background: #ff3b3b !important;                 /* Red background */
+  color: #fff !important;                         /* White text */
+  border-color: #ff3b3b !important;               /* Red border */
+  transform: translateY(-3px);                    /* Lift effect */
+  box-shadow: 0 6px 12px rgba(255, 59, 59, 0.3);   /* Red glow shadow */
+}
+
+/* Avatar circle when user is logged in */
+.avatar-btn {
+  width: 44px;                                    /* Fixed size */
+  height: 44px;                                   /* Perfect circle */
+  border-radius: 50%;                             /* Circle shape */
+  background: white;                              /* White background */
+  border: 3px solid #ffe047;                      /* Yellow ring */
+  cursor: pointer;                                /* Clickable */
+  overflow: hidden;                               /* Hide overflowing image */
+  transition: all 0.3s ease;                      /* Smooth hover */
+  display: flex;                                  /* Center content */
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-btn:hover {
+  transform: scale(1.1);                          /* Slightly enlarge */
+  box-shadow: 0 0 0 4px rgba(255, 224, 71, 0.4);   /* Yellow glow */
+}
+
+.avatar-btn img {
+  width: 100%;                                    /* Fill circle */
+  height: 100%;
+  object-fit: cover;                              /* Crop nicely */
+}
+
+/* Fallback when no avatar image – shows initial letter */
+.avatar-placeholder {
+  width: 100%;                                    /* Full size */
+  height: 100%;
+  background: linear-gradient(135deg, #0066cc, #0088ff); /* Gradient background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;                                   /* White letter */
+  font-weight: bold;                              /* Bold initial */
+  font-size: 18px;                                /* Large letter */
+}
+
+/* Dropdown menu under avatar */
+.avatar-menu {
+  position: absolute;                             /* Float below avatar */
+  top: calc(100% + 12px);                         /* 12px gap from avatar */
+  right: 0;                                       /* Align to right */
+  background: white;                              /* White background */
+  border-radius: 12px;                            /* Rounded */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);      /* Deep shadow */
+  min-width: 220px;                               /* Minimum width */
+  overflow: hidden;                               /* Clip corners */
+  animation: fadeIn 0.3s ease;                    /* Fade in animation */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Menu items inside avatar dropdown */
+.avatar-menu-item {
+  width: 100%;                                    /* Full width */
+  padding: 14px 20px;                             /* Comfortable padding
+  background: none;                               /* Transparent */
+  border: none;                                   /* No border */
+  text-align: left;                               /* Left aligned text */
+  font-size: 14px;                                /* Readable */
+  color: #333;                                    /* Dark text */
+  cursor: pointer;                                /* Clickable
+  transition: background 0.2s;                    /* Hover effect */
+}
+
+.avatar-menu-item:hover {
+  background: #f0f8ff;                            /* Light blue hover */
+}
+
+.avatar-menu-item:last-child {
+  color: #e74c3c;                                 /* Red text for Logout */
+  font-weight: 600;                               /* Slightly bolder */
+}
+
+.avatar-menu-item:last-child:hover {
+  background: #ffeaea;                            /* Light red hover */
+}
+
+/* Hamburger icon – visible only on mobile */
+.hamburger {
+  display: none;                                  /* Hidden on desktop */
+  flex-direction: column;                         /* Vertical lines */
+  gap: 5px;                                       /* Space between lines */
+  cursor: pointer;                                /* Clickable */
+  padding: 8px;                                   /* Larger tap area */
+}
+
+.hamburger span {
+  width: 28px;                                    /* Line width */
+  height: 3px;                                    /* Line thickness */
+  background: white;                              /* White lines */
+  border-radius: 3px;                             /* Rounded ends */
+  transition: all 0.3s;                           /* Animation ready */
+}
+
+/* Hamburger to X animation when active */
+.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.hamburger.active span:nth-child(2) { opacity: 0; }
+.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -8px); }
+
+/* Mobile menu that appears below navbar */
+.mobile-menu {
+  position: absolute;                             /* Overlay below navbar */
+  top: 100%;                                      /* Directly under navbar */
+  left: 0;                                        /* Full width */
+  right: 0;
+  background: #0066cc;                            /* Darker blue */
+  padding: 20px;                                  /* Inner spacing */
+  display: flex;
+  flex-direction: column;
+  gap: 20px;                                      /* Space between items */
+  animation: slideDown 0.4s ease;                 /* Slide down effect */
+  box-shadow: 0 10px 20px rgba(0, 0,  0,  0,  0.2); /* Shadow */
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.mobile-menu .nav-link {
+  font-size: 18px;                                /* Larger text on mobile */
+  padding: 12px 0;                                /* Vertical spacing */
+  text-align: center;                             /* Centered */
+}
+
+/* Tablet adjustments */
+@media (max-width: 1024px) {
+  .nav-links {
+    gap: 32px;                                      /* Smaller gap on tablets */
+  }
+}
+
+/* Mobile layout – hide desktop menu, show hamburger */
+@media (max-width: 868px) {
+  .nav-links,
+  .auth-buttons > .login-btn,
+  .auth-buttons > .signup-btn {
+    display: none;                                  /* Hide desktop elements */
+  }
+
+  .hamburger {
+    display: flex;                                  /* Show hamburger */
+  }
+
+  .auth-buttons {
+    gap: 12px;                                      /* Adjust spacing */
+  }
+
+  .avatar-btn {
+    width: 40px;                                    /* Slightly smaller avatar */
+    height: 40px;
+  }
+}
+
+/* Extra small phones */
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 12px 16px;                             /* Less side padding */
+  }
+
+  .navbar-logo {
+    font-size: 50px;                                /* Smaller brand text */
+  }
+
+  .navbar-logo img {
+    height: 50px;                                   /* Smaller logo */
+  }
+}
+=======
 /* ====== Navbar ====== */
 .navbar {
   width: 100%;
@@ -136,3 +449,4 @@
 .avatar-menu-item:hover {
   background: #f5f7fb;
 }
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c

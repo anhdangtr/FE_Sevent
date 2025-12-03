@@ -8,7 +8,11 @@ export default defineConfig({
     port: 5174,
     proxy: {
       '/api': {
+<<<<<<< HEAD
+        target: 'http://localhost:5001',
+=======
         target: 'http://localhost:5000',
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
         changeOrigin: true,
         secure: false,
         // Thêm dòng này để debug dễ hơn

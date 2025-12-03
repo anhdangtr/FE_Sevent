@@ -59,7 +59,11 @@ const LoginForm = () => {
 
     try {
       const payload = { email: form.email, password: form.password };
+<<<<<<< HEAD
+  const res = await axios.post('http://localhost:5001/api/auth/login', payload, { withCredentials: true });
+=======
       const res = await axios.post('http://localhost:5000/api/auth/login', payload, { withCredentials: true });
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
       setSuccess(res.data.message || 'Login successful');
       // Persist token and user to localStorage
       if (res.data.token) {

@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import logoImage from "../assets/logo.png";
+<<<<<<< HEAD
+=======
 import ReminderModal from "../components/ReminderModal";
 import SaveModal from "../components/SaveModal";
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
 import "./EventPage.css";
 
 const EventPage = () => {
@@ -16,12 +19,18 @@ const EventPage = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [activeNav, setActiveNav] = useState("home");
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+<<<<<<< HEAD
+
+  const isLoggedIn = !!localStorage.getItem("authToken");
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+=======
   const [showReminderModal, setShowReminderModal] = useState(false);
   const [showSaveModal, setShowSaveModal] = useState(false);
 
   const isLoggedIn = !!localStorage.getItem("authToken");
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
   const token = localStorage.getItem("authToken");
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
 
   const location = useLocation();
 
@@ -49,13 +58,26 @@ const EventPage = () => {
   const fetchEventDetails = async () => {
     try {
       setLoading(true);
+<<<<<<< HEAD
+      
+=======
 
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
       // Validate eventId format
       if (!eventId || !eventId.match(/^[0-9a-fA-F]{24}$/)) {
         setError(`Event ID không hợp lệ: ${eventId}/:id`);
         setLoading(false);
         return;
       }
+<<<<<<< HEAD
+      
+      const url = `${API_URL}/events/${eventId}`;
+      console.log('Fetching from:', url);
+      
+      const response = await axios.get(url);
+      console.log('Response:', response.data);
+      
+=======
 
       const url = `${API_URL}/events/${eventId}`;
       console.log('Fetching from:', url);
@@ -73,10 +95,18 @@ const EventPage = () => {
 
       console.log('Response:', response.data);
 
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
       if (response.data.success) {
         setEvent(response.data.data);
         setLikeCount(response.data.data.interestingCount || 0);
       } else {
+<<<<<<< HEAD
+        setError("Sự kiện không tồn tại");
+      }
+    } catch (err) {
+      console.error("Fetch event error:", err.response?.data || err.message);
+      setError(err.response?.data?.message || "Không thể tải chi tiết sự kiện");
+=======
         setError('Sự kiện không tồn tại');
       }
     } catch (err) {
@@ -86,6 +116,7 @@ const EventPage = () => {
       if (err.response?.status === 401 || (message && message.toLowerCase().includes('vui lòng đăng nhập'))) {
         navigate('/auth/LogIn', { state: { from: location.pathname, message } });
       }
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
     } finally {
       setLoading(false);
     }
@@ -95,6 +126,19 @@ const EventPage = () => {
     if (!isLoggedIn) return;
 
     try {
+<<<<<<< HEAD
+      const response = await axios.get(
+        `${API_URL}/events/${eventId}/check-like`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("authToken")}`
+          }
+        }
+      );
+      setIsLiked(response.data.isLiked);
+    } catch (err) {
+      console.error("Check like error:", err);
+=======
       const token = localStorage.getItem('authToken');
       if (!token) return;
       const response = await axios.get(`${API_URL}/events/${eventId}/check-like`, {
@@ -103,6 +147,7 @@ const EventPage = () => {
       setIsLiked(response.data.isLiked);
     } catch (err) {
       console.error('Check like error:', err);
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
     }
   };
 
@@ -338,6 +383,12 @@ const EventPage = () => {
               onClick={handleLikeClick}
             >
               <span className="heart-icon">
+<<<<<<< HEAD
+                {isLiked ? "❤️" : "🤍"}
+              </span>
+              <span className="like-count">{likeCount}</span>
+            </button>
+=======
                 {isLiked ? "❍" : "🤍"}
               </span>
               <span className="like-count">{likeCount}</span>
@@ -356,6 +407,7 @@ const EventPage = () => {
             >
               💾 Save
             </button>
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
           </div>
 
           {/* Event Info Section */}
@@ -419,6 +471,8 @@ const EventPage = () => {
           </div>
         </div>
       </div>
+<<<<<<< HEAD
+=======
 
       {/* Reminder Modal */}
       <ReminderModal
@@ -438,6 +492,7 @@ const EventPage = () => {
         API_URL={API_URL}
         token={token}
       />
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
     </div>
   );
 };
