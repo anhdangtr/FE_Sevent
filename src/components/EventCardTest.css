@@ -1,19 +1,20 @@
 .event-card {
   background: white;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   height: 100%;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #e8e8e8;
+  position: relative;
 }
 
 .event-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 136, 255, 0.15);
+  transform: translateY(-12px);
+  box-shadow: 0 20px 40px rgba(0, 136, 255, 0.2);
   border-color: #0088ff;
 }
 
@@ -21,113 +22,134 @@
 .event-banner {
   position: relative;
   width: 100%;
-  height: 220px;
+  height: 240px;
   overflow: hidden;
-  background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);
+  background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
 }
 
 .banner-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .event-card:hover .banner-image {
-  transform: scale(1.08);
+  transform: scale(1.12);
 }
 
 /* Badge */
 .event-badge {
   position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 6px 14px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 700;
+  top: 14px;
+  right: 14px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
   z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideInRight 0.4s ease;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .event-badge.coming-soon {
-  background-color: #ffe047;
+  background: linear-gradient(135deg, #ffe047 0%, #ffd700 100%);
   color: #333;
 }
 
 .event-badge.ended {
-  background-color: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
   color: white;
 }
 
 /* Action Buttons */
 .event-actions {
   position: absolute;
-  bottom: 12px;
-  right: 12px;
+  bottom: 14px;
+  right: 14px;
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 10;
 }
 
 .action-btn {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: none;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.95);
+  background: white;
   cursor: pointer;
   font-size: 20px;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border: 2px solid transparent;
 }
 
 .action-btn:hover {
-  transform: scale(1.15);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: scale(1.2) rotate(5deg);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
 }
 
 .action-btn.like-btn.active {
-  background-color: #ff6b6b;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%);
+  color: white;
+  border-color: white;
 }
 
 .action-btn.save-btn.active {
-  background-color: #ffe047;
+  background: linear-gradient(135deg, #ffe047 0%, #ffd700 100%);
+  color: #333;
+  border-color: white;
 }
 
 /* ============ CONTENT ============ */
 .event-content {
-  padding: 24px;
+  padding: 28px;
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 12px;
 }
 
 /* Title */
 .event-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 800;
   color: #1a1a1a;
-  margin: 0 0 12px 0;
+  margin: 0;
   line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   overflow: hidden;
 }
 
 /* Description */
 .event-description {
-  font-size: 14px;
+  font-size: 13px;
   color: #666;
-  margin: 0 0 16px 0;
+  margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  line-clamp: 2;
   overflow: hidden;
   line-height: 1.5;
 }
@@ -197,43 +219,47 @@
 /* Stats */
 .event-stats {
   display: flex;
-  gap: 12px;
-  margin: 14px 0;
-  padding: 12px 0;
-  border-top: 1px solid #eee;
+  gap: 16px;
+  margin-top: 8px;
+  padding: 14px 0;
+  border-top: 2px solid #f0f0f0;
+  border-bottom: 2px solid #f0f0f0;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .stat-item {
   display: flex;
   align-items: center;
-  gap: 4px;
-  color: #666;
+  gap: 6px;
+  color: #0088ff;
 }
 
 /* CTA Button */
 .event-cta-btn {
   width: 100%;
-  padding: 12px 16px;
+  padding: 14px 16px;
   background: linear-gradient(135deg, #0088ff 0%, #0066cc 100%);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 10px;
+  font-weight: 700;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   margin-top: auto;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 136, 255, 0.2);
 }
 
 .event-cta-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 136, 255, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 136, 255, 0.35);
 }
 
 .event-cta-btn:active {
-  transform: translateY(0);
+  transform: translateY(-1px);
 }
 
 /* ============ RESPONSIVE ============ */
@@ -241,68 +267,110 @@
 /* Tablet */
 @media (max-width: 1024px) {
   .event-banner {
-    height: 200px;
+    height: 220px;
   }
 
   .event-content {
-    padding: 20px;
+    padding: 24px;
   }
 
   .event-title {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .event-description {
-    font-size: 13px;
+    font-size: 12px;
+  }
+  
+  .event-stats {
+    gap: 12px;
+    font-size: 12px;
+    padding: 12px 0;
   }
 }
 
 /* Mobile */
 @media (max-width: 768px) {
   .event-banner {
-    height: 180px;
+    height: 200px;
   }
 
   .event-content {
-    padding: 16px;
+    padding: 20px;
+    gap: 10px;
   }
 
   .event-title {
-    font-size: 15px;
-    margin-bottom: 10px;
+    font-size: 16px;
   }
 
   .event-description {
     font-size: 12px;
-    margin-bottom: 12px;
   }
 
   .event-date,
   .event-time,
   .event-location {
     font-size: 12px;
-    margin-bottom: 8px;
   }
 
   .event-stats {
+    gap: 10px;
     font-size: 12px;
-    margin: 10px 0;
     padding: 10px 0;
+    margin-top: 6px;
   }
 
   .event-cta-btn {
-    padding: 10px 14px;
+    padding: 12px 14px;
     font-size: 13px;
+  }
+
+  .action-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-banner {
+    height: 180px;
+  }
+
+  .event-content {
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .event-title {
+    font-size: 15px;
+  }
+
+  .event-description {
+    font-size: 11px;
+  }
+
+  .event-date,
+  .event-time,
+  .event-location {
+    font-size: 11px;
+  }
+
+  .event-stats {
+    gap: 8px;
+    font-size: 11px;
+    padding: 8px 0;
+  }
+
+  .event-cta-btn {
+    padding: 10px 12px;
+    font-size: 12px;
   }
 
   .action-btn {
     width: 36px;
     height: 36px;
     font-size: 16px;
-  }
-
-  .event-badge {
-    font-size: 10px;
-    padding: 4px 10px;
   }
 }
