@@ -44,29 +44,43 @@ const EventPage = () => {
   const fetchEventDetails = async () => {
     try {
       setLoading(true);
-      
+
       // Validate eventId format
       if (!eventId || !eventId.match(/^[0-9a-fA-F]{24}$/)) {
         setError(`Event ID không hợp lệ: ${eventId}/:id`);
         setLoading(false);
         return;
       }
-      
+
       const url = `${API_URL}/events/${eventId}`;
       console.log('Fetching from:', url);
-      
-      const response = await axios.get(url);
+
+      // Require token to view event details
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        navigate('/auth/LogIn', { state: { from: location.pathname, message: 'Vui lòng đăng nhập để truy cập sự kiện' } });
+        return;
+      }
+
+      const response = await axios.get(url, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
       console.log('Response:', response.data);
-      
+
       if (response.data.success) {
         setEvent(response.data.data);
         setLikeCount(response.data.data.interestingCount || 0);
       } else {
-        setError("Sự kiện không tồn tại");
+        setError('Sự kiện không tồn tại');
       }
     } catch (err) {
-      console.error("Fetch event error:", err.response?.data || err.message);
-      setError(err.response?.data?.message || "Không thể tải chi tiết sự kiện");
+      console.error('Fetch event error:', err.response?.data || err.message);
+      const message = err.response?.data?.message || 'Không thể tải chi tiết sự kiện';
+      setError(message);
+      if (err.response?.status === 401 || (message && message.toLowerCase().includes('vui lòng đăng nhập'))) {
+        navigate('/auth/LogIn', { state: { from: location.pathname, message } });
+      }
     } finally {
       setLoading(false);
     }
@@ -76,17 +90,14 @@ const EventPage = () => {
     if (!isLoggedIn) return;
 
     try {
-      const response = await axios.get(
-        `${API_URL}/events/${eventId}/check-like`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`
-          }
-        }
-      );
+      const token = localStorage.getItem('authToken');
+      if (!token) return;
+      const response = await axios.get(`${API_URL}/events/${eventId}/check-like`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       setIsLiked(response.data.isLiked);
     } catch (err) {
-      console.error("Check like error:", err);
+      console.error('Check like error:', err);
     }
   };
 
