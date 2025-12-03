@@ -1,0 +1,268 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './ReminderModal.css';
+
+const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token }) => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [selectedTime, setSelectedTime] = useState('09:00');
+  const [reminders, setReminders] = useState([]);
+  const [note, setNote] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const MAX_REMINDERS = 3;
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchReminders();
+      setSelectedDate(null);
+      setSelectedTime('09:00');
+      setNote('');
+      setError('');
+    }
+  }, [isOpen]);
+
+  const fetchReminders = async () => {
+    try {
+      const res = await axios.get(`${API_URL}/reminders/${eventId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setReminders(res.data.data || []);
+    } catch (err) {
+      console.error('Fetch reminders error:', err);
+      setReminders([]);
+    }
+  };
+
+  const handleDateSelect = (day) => {
+    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+    setSelectedDate(date);
+  };
+
+  const handlePrevMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
+  };
+
+  const handleNextMonth = () => {
+    setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+  };
+
+  const handleSetReminder = async () => {
+    if (!selectedDate || !selectedTime) {
+      setError('Vui lòng chọn ngày và giờ');
+      return;
+    }
+
+    if (reminders.length >= MAX_REMINDERS) {
+      setError(`Chỉ được đặt tối đa ${MAX_REMINDERS} reminder`);
+      return;
+    }
+
+    // Check for duplicate time
+    const reminderDateTime = new Date(selectedDate);
+    const [hours, minutes] = selectedTime.split(':');
+    reminderDateTime.setHours(parseInt(hours), parseInt(minutes));
+
+    const isDuplicate = reminders.some(r => {
+      const rDate = new Date(r.reminderDateTime);
+      return rDate.getTime() === reminderDateTime.getTime();
+    });
+
+    if (isDuplicate) {
+      setError('Thời gian reminder này đã tồn tại');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const payload = {
+        eventId,
+        reminderDateTime,
+        note
+      };
+      await axios.post(`${API_URL}/reminders`, payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      // Refresh reminders
+      fetchReminders();
+      setSelectedDate(null);
+      setSelectedTime('09:00');
+      setNote('');
+      setError('');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Lỗi khi đặt reminder');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteReminder = async (reminderId) => {
+    try {
+      await axios.delete(`${API_URL}/reminders/${reminderId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      fetchReminders();
+    } catch (err) {
+      console.error('Delete reminder error:', err);
+    }
+  };
+
+  const getDaysInMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+  };
+
+  const getFirstDayOfMonth = (date) => {
+    return new Date(date.getFullYear(), date.getMonth(), 1).getDay();
+  };
+
+  const renderCalendar = () => {
+    const daysInMonth = getDaysInMonth(currentMonth);
+    const firstDay = getFirstDayOfMonth(currentMonth);
+    const days = [];
+
+    // Empty cells before month starts
+    for (let i = 0; i < firstDay; i++) {
+      days.push(<div key={`empty-${i}`} className="calendar-empty"></div>);
+    }
+
+    // Days of month
+    for (let i = 1; i <= daysInMonth; i++) {
+      const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
+      const isSelected = selectedDate && selectedDate.toDateString() === date.toDateString();
+      days.push(
+        <button
+          key={i}
+          className={`calendar-day ${isSelected ? 'selected' : ''}`}
+          onClick={() => handleDateSelect(i)}
+        >
+          {i}
+        </button>
+      );
+    }
+
+    return days;
+  };
+
+  const renderTimeOptions = () => {
+    const times = [];
+    for (let h = 0; h < 24; h++) {
+      for (let m = 0; m < 60; m += 15) {
+        const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        times.push(timeStr);
+      }
+    }
+    return times;
+  };
+
+  const formatReminderTime = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleString('vi-VN', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="reminder-modal-overlay">
+      <div className="reminder-modal">
+        <div className="reminder-modal-content">
+          {/* Left Panel */}
+          <div className="reminder-left-panel">
+            <div className="reminder-event-title">{eventTitle}</div>
+            
+            <div className="reminder-list-container">
+              <h3>Reminders đã đặt</h3>
+              {reminders.length === 0 ? (
+                <p className="no-reminders">Chưa có reminder nào</p>
+              ) : (
+                <ul className="reminders-list">
+                  {reminders.map(r => (
+                    <li key={r._id} className="reminder-item">
+                      <div className="reminder-item-time">{formatReminderTime(r.reminderDateTime)}</div>
+                      {r.note && <div className="reminder-item-note">{r.note}</div>}
+                      <button
+                        className="reminder-delete-btn"
+                        onClick={() => handleDeleteReminder(r._id)}
+                      >
+                        ✕
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+
+            <div className="reminder-note-box">
+              <label>Ghi chú</label>
+              <textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                placeholder="Thêm ghi chú..."
+                rows={4}
+              />
+            </div>
+          </div>
+
+          {/* Right Panel - Calendar & Time Picker */}
+          <div className="reminder-right-panel">
+            <h3>Chọn ngày & giờ</h3>
+            
+            <div className="calendar-header">
+              <button onClick={handlePrevMonth}>&lt;</button>
+              <span>{currentMonth.toLocaleDateString('vi-VN', { month: 'long', year: 'numeric' })}</span>
+              <button onClick={handleNextMonth}>&gt;</button>
+            </div>
+
+            <div className="calendar-weekdays">
+              <div>CN</div><div>T2</div><div>T3</div><div>T4</div>
+              <div>T5</div><div>T6</div><div>T7</div>
+            </div>
+
+            <div className="calendar-days">
+              {renderCalendar()}
+            </div>
+
+            <div className="time-picker-container">
+              <label>Giờ</label>
+              <select value={selectedTime} onChange={(e) => setSelectedTime(e.target.value)} className="time-select">
+                {renderTimeOptions().map(time => (
+                  <option key={time} value={time}>{time}</option>
+                ))}
+              </select>
+            </div>
+
+            {selectedDate && (
+              <div className="selected-datetime">
+                {selectedDate.toLocaleDateString('vi-VN')} lúc {selectedTime}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Error Message */}
+        {error && <div className="reminder-error">{error}</div>}
+
+        {/* Footer Buttons */}
+        <div className="reminder-modal-footer">
+          <button className="reminder-back-btn" onClick={onClose}>← Trở về</button>
+          <button 
+            className="reminder-set-btn" 
+            onClick={handleSetReminder}
+            disabled={loading || reminders.length >= MAX_REMINDERS}
+          >
+            {loading ? 'Đang lưu...' : 'Đặt Reminder'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ReminderModal;

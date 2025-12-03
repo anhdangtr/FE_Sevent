@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* Main navbar bar – full width, blue background, sticky at top */
 .navbar {
   width: 100%;                                    /* Takes full width of screen */
@@ -309,3 +310,143 @@
     height: 50px;                                   /* Smaller logo */
   }
 }
+=======
+/* ====== Navbar ====== */
+.navbar {
+  width: 100%;
+  background-color: #0088ff;
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.navbar-logo {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.navbar-logo img {
+  height: 40px;
+  width: auto;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 36px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-link {
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 6px 8px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+  opacity: 0.8;
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -8px;
+  height: 4px;
+  background: #ffe047;
+  border-radius: 4px;
+}
+
+.auth-buttons {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.login-btn {
+  background: #004aad;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background: #003380;
+}
+
+.signup-btn {
+  background: #ffe047;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+  background: #ffd700;
+  color: #000;
+}
+
+/* Avatar menu */
+.avatar-menu {
+  position: absolute;
+  right: 0;
+  margin-top: 8px;
+  background: white;
+  color: #333;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  flex-direction: column;
+  min-width: 180px;
+  z-index: 40;
+  overflow: hidden;
+}
+
+.avatar-menu-item {
+  padding: 10px 14px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  width: 100%;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.avatar-menu-item:hover {
+  background: #f5f7fb;
+}
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c

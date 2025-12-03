@@ -19,7 +19,11 @@ const PageTest = () => {
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
 
 
+<<<<<<< HEAD
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
+=======
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
   const LIMIT = 9;
 
 
@@ -138,7 +142,11 @@ return (
     {/* Main Events Section */}
     <section className="events-section">
       <div className="container">
+<<<<<<< HEAD
         {page === 1 && (
+=======
+        {page === 1 && !search && (
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
           <div className="filters">
             <label htmlFor="category" className="category-label">
               Explore categories
@@ -227,3 +235,7 @@ return (
 };
 
 export default PageTest;
+<<<<<<< HEAD
+=======
+
+>>>>>>> db807902523ffb80f00deca727a18c1f941d739c
