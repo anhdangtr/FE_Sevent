@@ -71,11 +71,7 @@ const SignUpForm = () => {
         passwordConfirm: form.passwordConfirm
       };
 
-<<<<<<< HEAD
-  const res = await axios.post('http://localhost:5001/api/auth/signup', payload, { withCredentials: true });
-=======
       const res = await axios.post('http://localhost:5000/api/auth/signup', payload, { withCredentials: true });
->>>>>>> db807902523ffb80f00deca727a18c1f941d739c
       setSuccess(res.data.message || 'Sign up successful');
       setForm({ name: '', email: '', password: '', passwordConfirm: '' });
 
