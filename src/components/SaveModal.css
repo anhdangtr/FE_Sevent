@@ -1,0 +1,163 @@
+/* SaveModal Styles */
+.save-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.save-modal {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 450px;
+}
+
+.save-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.save-modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #2d2c3c;
+}
+
+.save-modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.save-modal-close:hover {
+  color: #2d2c3c;
+}
+
+.save-modal-body {
+  padding: 24px;
+}
+
+.save-modal-body label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d2c3c;
+  margin-bottom: 8px;
+}
+
+.save-folder-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 8px;
+}
+
+.save-folder-input:focus {
+  outline: none;
+  border-color: #0088ff;
+  box-shadow: 0 0 4px rgba(0, 136, 255, 0.2);
+}
+
+.save-info-text {
+  margin: 0;
+  font-size: 12px;
+  color: #999;
+}
+
+.save-error {
+  background: #fee;
+  color: #d9534f;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin: 0 24px 12px;
+}
+
+.save-success {
+  background: #efe;
+  color: #5cb85c;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  margin: 0 24px 12px;
+}
+
+.save-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.save-cancel-btn,
+.save-confirm-btn {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.save-cancel-btn {
+  background: #f0f0f0;
+  color: #2d2c3c;
+}
+
+.save-cancel-btn:hover {
+  background: #e0e0e0;
+}
+
+.save-confirm-btn {
+  background: #0088ff;
+  color: white;
+}
+
+.save-confirm-btn:hover:not(:disabled) {
+  background: #0077dd;
+}
+
+.save-confirm-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  .save-modal {
+    max-width: 90%;
+  }
+
+  .save-modal-footer {
+    flex-direction: column;
+  }
+
+  .save-cancel-btn,
+  .save-confirm-btn {
+    width: 100%;
+  }
+}

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import logoImage from "../assets/logo.png";
+import ReminderModal from "../components/ReminderModal";
+import SaveModal from "../components/SaveModal";
 import "./EventPage.css";
 
 const EventPage = () => {
@@ -14,9 +16,12 @@ const EventPage = () => {
   const [likeCount, setLikeCount] = useState(0);
   const [activeNav, setActiveNav] = useState("home");
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const [showReminderModal, setShowReminderModal] = useState(false);
+  const [showSaveModal, setShowSaveModal] = useState(false);
 
   const isLoggedIn = !!localStorage.getItem("authToken");
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const token = localStorage.getItem("authToken");
 
   const location = useLocation();
 
@@ -333,9 +338,23 @@ const EventPage = () => {
               onClick={handleLikeClick}
             >
               <span className="heart-icon">
-                {isLiked ? "❤️" : "🤍"}
+                {isLiked ? "❍" : "🤍"}
               </span>
               <span className="like-count">{likeCount}</span>
+            </button>
+            <button
+              className="register-btn"
+              onClick={() => setShowReminderModal(true)}
+              style={{ backgroundColor: '#FF9800' }}
+            >
+              ⏰ Reminder
+            </button>
+            <button
+              className="register-btn"
+              onClick={() => setShowSaveModal(true)}
+              style={{ backgroundColor: '#4CAF50' }}
+            >
+              💾 Save
             </button>
           </div>
 
@@ -400,6 +419,25 @@ const EventPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Reminder Modal */}
+      <ReminderModal
+        eventId={eventId}
+        eventTitle={event?.title || ''}
+        isOpen={showReminderModal}
+        onClose={() => setShowReminderModal(false)}
+        API_URL={API_URL}
+        token={token}
+      />
+
+      {/* Save Modal */}
+      <SaveModal
+        eventId={eventId}
+        isOpen={showSaveModal}
+        onClose={() => setShowSaveModal(false)}
+        API_URL={API_URL}
+        token={token}
+      />
     </div>
   );
 };
