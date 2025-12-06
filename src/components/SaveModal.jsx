@@ -1,121 +1,161 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "./SaveModal.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import './SaveModal.css';
 
 const SaveModal = ({ eventId, isOpen, onClose, API_URL, token }) => {
+  const [selectedFolder, setSelectedFolder] = useState('Watch later');
   const [folders, setFolders] = useState([]);
-  const [search, setSearch] = useState("");
+  const [isCreatingNew, setIsCreatingNew] = useState(false);
+  const [newFolderName, setNewFolderName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [folderLoading, setFolderLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  // Folder xem nhiều → phần "Các lựa chọn hay nhất"
-  const [topFolders, setTopFolders] = useState([]);
-
-  // Tạo bảng mới
-  const [creating, setCreating] = useState(false);
-  const [newFolder, setNewFolder] = useState("");
-
+  // Fetch danh sách folder khi modal mở
   useEffect(() => {
-    if (!isOpen) return;
-    fetchFolders();
+    if (isOpen) {
+      fetchFolders();
+    }
   }, [isOpen]);
 
   const fetchFolders = async () => {
     try {
-      const res = await axios.get(`${API_URL}/saved-events/folders`, {
-        headers: { Authorization: `Bearer ${token}` },
+      setFolderLoading(true);
+      const response = await axios.get(`${API_URL}/saved-events/folders`, {
+        headers: { Authorization: `Bearer ${token}` }
       });
-
-      const list = res.data.folders || [];
-      setFolders(list);
-      setTopFolders(list.slice(0, 2)); // giả lập best choice
-    } catch (e) {
-      console.log("Error loading folders");
+      setFolders(response.data.folders || []);
+    } catch (err) {
+      console.error('Lỗi khi lấy danh sách folder:', err);
+      setFolders([]);
+    } finally {
+      setFolderLoading(false);
     }
   };
 
-  const handleSave = async (folderName) => {
+  const handleSave = async () => {
+    const folderToSave = isCreatingNew ? newFolderName.trim() : selectedFolder;
+
+    if (!folderToSave) {
+      setError('Vui lòng chọn hoặc nhập tên folder');
+      return;
+    }
+
     try {
       setLoading(true);
-      await axios.post(
-        `${API_URL}/saved-events`,
-        { eventId, folderName },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      onClose();
-    } catch (e) {
-      console.log("Save error");
+      setError('');
+      setSuccess('');
+
+      const payload = {
+        eventId,
+        folderName: folderToSave
+      };
+
+      await axios.post(`${API_URL}/saved-events`, payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+
+      setSuccess('Lưu event thành công!');
+      setTimeout(() => {
+        handleClose();
+      }, 800);
+    } catch (err) {
+      setError(err.response?.data?.message || 'Lỗi khi lưu event');
     } finally {
       setLoading(false);
     }
   };
 
-  const handleCreateFolder = async () => {
-    if (!newFolder.trim()) return;
-
-    await handleSave(newFolder.trim());
+  const handleClose = () => {
+    setSelectedFolder('Watch later');
+    setIsCreatingNew(false);
+    setNewFolderName('');
+    setError('');
+    setSuccess('');
+    onClose();
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="save-overlay">
-      <div className="save-box">
-        <div className="save-header">
-          <h2>Lưu</h2>
-          <button className="close-btn" onClick={onClose}>✕</button>
+    <div className="save-modal-overlay">
+      <div className="save-modal">
+        <div className="save-modal-header">
+          <h2>Lưu Event</h2>
+          <button className="save-modal-close" onClick={handleClose}>✕</button>
         </div>
 
-        {/* Search */}
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Tìm kiếm"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
-
-        <div className="folder-scroll">
-
-          {/* TOP FOLDERS */}
-          <div className="section-title">Các lựa chọn hay nhất</div>
-          {topFolders.map((f, i) => (
-            <div key={i} className="folder-item" onClick={() => handleSave(f)}>
-              <div className="folder-thumb"></div>
-              <div className="folder-name">{f}</div>
-            </div>
-          ))}
-
-          {/* ALL FOLDERS */}
-          <div className="section-title">Tất cả các bảng</div>
-          {folders
-            .filter((f) => f.toLowerCase().includes(search.toLowerCase()))
-            .map((f, i) => (
-              <div key={i} className="folder-item" onClick={() => handleSave(f)}>
-                <div className="folder-thumb"></div>
-                <div className="folder-name">{f}</div>
+        <div className="save-modal-body">
+          <label>Chọn Folder</label>
+          
+          {!isCreatingNew ? (
+            <>
+              <select
+                value={selectedFolder}
+                onChange={(e) => setSelectedFolder(e.target.value)}
+                className="save-folder-select"
+                disabled={folderLoading}
+              >
+                <option value="Watch later"> Watch later</option>
+                {folders.map((folder) => (
+                  <option key={folder.id} value={folder.name}>
+                    📁 {folder.name}
+                  </option>
+                ))}
+              </select>
+              
+              <button
+                className="save-create-new-btn"
+                onClick={() => setIsCreatingNew(true)}
+              >
+                + Tạo folder mới
+              </button>
+            </>
+          ) : (
+            <>
+              <input
+                type="text"
+                value={newFolderName}
+                onChange={(e) => setNewFolderName(e.target.value)}
+                placeholder="Nhập tên folder mới..."
+                className="save-folder-input"
+                autoFocus
+              />
+              <div className="save-new-folder-actions">
+                <button
+                  className="save-new-folder-confirm"
+                  onClick={() => setIsCreatingNew(false)}
+                >
+                  Xong
+                </button>
+                <button
+                  className="save-new-folder-cancel"
+                  onClick={() => {
+                    setIsCreatingNew(false);
+                    setNewFolderName('');
+                  }}
+                >
+                  Huỷ
+                </button>
               </div>
-            ))}
+            </>
+          )}
         </div>
 
-        {/* CREATE FOLDER BUTTON */}
-        {!creating ? (
-          <div className="create-btn" onClick={() => setCreating(true)}>
-            <span className="plus-icon">＋</span> Tạo bảng
-          </div>
-        ) : (
-          <div className="create-box">
-            <input
-              type="text"
-              placeholder="Tên bảng"
-              value={newFolder}
-              onChange={(e) => setNewFolder(e.target.value)}
-            />
-            <button className="submit-btn" onClick={handleCreateFolder}>
-              Tạo
-            </button>
-          </div>
-        )}
+        {error && <div className="save-error">{error}</div>}
+        {success && <div className="save-success">{success}</div>}
+
+        <div className="save-modal-footer">
+          <button className="save-cancel-btn" onClick={handleClose}>Huỷ</button>
+          <button 
+            className="save-confirm-btn" 
+            onClick={handleSave}
+            disabled={loading}
+          >
+            {loading ? 'Đang lưu...' : 'Lưu Event'}
+          </button>
+        </div>
       </div>
     </div>
   );
