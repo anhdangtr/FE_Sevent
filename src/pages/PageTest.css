@@ -9,9 +9,10 @@
 /* ====== Top Navbar ====== */
 .navbar {
   width: 100%;
-  background-color: #0088ff; /* top bar color */
+  background-color: #0088ff;
+  /* top bar color */
   color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .navbar-container {
@@ -20,7 +21,8 @@
   padding: 12px 20px;
   display: flex;
   align-items: center;
-  justify-content: center; /* center the nav links row */
+  justify-content: center;
+  /* center the nav links row */
   position: relative;
 }
 
@@ -60,7 +62,8 @@
   right: 0;
   bottom: -8px;
   height: 4px;
-  background: #FFE047; /* yellow underline */
+  background: #FFE047;
+  /* yellow underline */
   border-radius: 4px;
 }
 
@@ -74,7 +77,8 @@
 }
 
 .login-btn {
-  background: #004AAD; /* blue box */
+  background: #004AAD;
+  /* blue box */
   color: white;
   padding: 8px 14px;
   border-radius: 8px;
@@ -84,7 +88,8 @@
 }
 
 .signup-btn {
-  background: #FFE047; /* yellow box */
+  background: #FFE047;
+  /* yellow box */
   color: white;
   padding: 8px 14px;
   border-radius: 8px;
@@ -92,6 +97,74 @@
   font-weight: 700;
   cursor: pointer;
 }
+
+/* Container explore categories*/
+
+.filters {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  width: 100%;
+}
+
+.category-label {
+  font-size: 32px;
+  font-weight: 700;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  padding-left: 20px;
+  color:black;
+}
+
+.category-options {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 0 60px;
+}
+
+.category-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 12px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.category-option:hover {
+  background-color: #f0f0f0;
+}
+
+.category-option img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  transition: border 0.2s ease, transform 0.2s ease;
+}
+
+.category-option:hover img {
+  transform: scale(1.05);
+}
+
+.category-option.active img {
+  border-color: #007bff;
+}
+
+.category-name {
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
 
 /* Avatar menu */
 .avatar-menu {
@@ -101,7 +174,7 @@
   background: white;
   color: #333;
   border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   display: flex;
   flex-direction: column;
   min-width: 180px;
@@ -124,7 +197,8 @@
 
 /* ====== Blue Hero Under Navbar ====== */
 .hero-section {
-  background: #004AAD; /* blue hero */
+  background: #004AAD;
+  /* blue hero */
   color: white;
   padding: 64px 20px;
   text-align: center;
@@ -161,7 +235,8 @@
 
 .search-btn {
   padding: 12px 22px;
-  background-color: #FFE047; /* yellow button inside hero */
+  background-color: #FFE047;
+  /* yellow button inside hero */
   color: #004AAD;
   border: none;
   border-radius: 8px;
@@ -177,7 +252,7 @@
 
 /* ============ Hero Section ============ */
 .hero-section {
-  background:#004AAD;
+  background: #004AAD;
   color: white;
   padding: 80px 20px;
   text-align: center;
@@ -236,29 +311,32 @@
 
 /* ============ Trending Section ============ */
 .trending-section {
-  padding: 60px 20px;
-  background-color: white;
-  margin-bottom: 40px;
+  padding: 20px 20px !important;
+  margin-bottom: 20px !important;
 }
+
 
 .section-title {
   font-size: 32px;
   font-weight: 700;
   margin-bottom: 40px;
-  text-align: center;
+  text-align: left;
   color: #1a1a1a;
 }
 
-.trending-grid {
+/* .trending-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 24px;
-}
+  width: 100%;
+  height: 30%;
+} */
 
 /* ============ Events Section ============ */
 .events-section {
-  padding: 60px 20px;
+  padding: 20px 20px !important;
 }
+
 
 /* Filters */
 .filters {
@@ -293,9 +371,17 @@
 /* Events Grid */
 .events-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  gap: 28px;
-  margin-bottom: 40px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  height: auto; /* FIX */
+  margin-bottom: 10px;
+  transform: translateX(0); /* FIX */
+}
+
+
+.events-grid > * {
+    min-height: 220px;
 }
 
 /* Loading & Empty State */
@@ -410,4 +496,3 @@
     grid-template-columns: 1fr;
   }
 }
-

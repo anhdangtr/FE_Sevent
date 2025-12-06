@@ -52,13 +52,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-/* Events Grid */
-.events-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
-  gap: 28px;
-  margin-bottom: 40px;
-}
+
 
 /* Loading & Empty State */
 .loading,

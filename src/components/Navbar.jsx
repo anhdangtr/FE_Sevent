@@ -2,11 +2,26 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 import "./Navbar.css";
+import { useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = ({ activeNav, setActiveNav }) => {
   const navigate = useNavigate();
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const isLoggedIn = !!localStorage.getItem("authToken");
+  let user = null;
+
+  try {
+    const token = localStorage.getItem("authToken");
+    // console.log(token);
+    if (token) 
+      {
+        user = jwtDecode(token)
+      };
+    // console.log(user);
+  } catch (err) {
+    console.error("Decode token error", err);
+  }
 
   const handleNavClick = (nav, path) => {
     setActiveNav(nav);
@@ -50,6 +65,15 @@ const Navbar = ({ activeNav, setActiveNav }) => {
               Contact
             </button>
           </li>
+          {
+            user?.role === "admin" && (
+              <li>
+                <button className={`nav-link ${activeNav === "user" ? "active" : ""}`} onClick={() => handleNavClick("user", "/user")}>
+                  User
+                </button>
+              </li>
+            )}
+
         </ul>
 
         {/* Nút bên phải: Login / Sign up hoặc Avatar */}

@@ -36,8 +36,8 @@
 }
 
 .navbar-logo img {
-  height: 40px;
-  width: auto;
+  height: 70px;
+  width: 130px;
 }
 
 .nav-links {
@@ -67,12 +67,14 @@
 .nav-link.active::after {
   content: "";
   position: absolute;
-  left: 0;
+  left: 33;
   right: 0;
   bottom: -8px;
   height: 4px;
   background: #ffe047;
   border-radius: 4px;
+  width: 90px;
+  
 }
 
 .auth-buttons {

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Contact.css"; // Import the Contact page CSS
 
 function Contact() {
+    const [activeNav, setActiveNav] = useState("home");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -21,6 +22,7 @@ function Contact() {
 
   return (
     <div className="contact-container">
+        {/* <Navbar activeNav={activeNav} setActiveNav={setActiveNav} /> */}
       <div className="contact-header">
         <h1>Contact Us</h1>
         <p>If you have any questions or inquiries, feel free to reach out.</p>

@@ -8,7 +8,7 @@ const SignUp = () => {
     <div className="signup-container">
       {/* Left Panel */}
       <div className="signup-left-panel">
-        <img src={logo} alt="logo" className="signup-logo" />
+        {/* <img src={logo} alt="logo" className="signup-logo" /> */}
         <h1 className="signup-title">
           Discover & <br /> Stay organized
         </h1>
