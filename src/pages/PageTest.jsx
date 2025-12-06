@@ -97,7 +97,7 @@ const PageTest = () => {
 
   return (
     <div className="landpage-container">
-      <Navbar />
+       {/* <Navbar activeNav={activeNav} setActiveNav={setActiveNav} /> */}
 
       {/* Hero Section */}
       <section className="hero-section">
