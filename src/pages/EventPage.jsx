@@ -160,6 +160,7 @@ const EventPage = () => {
   if (loading) {
     return (
       <div className="event-page-container">
+          {/* <Navbar activeNav={activeNav} setActiveNav={setActiveNav} /> */}
         <nav className="navbar">
           <div className="navbar-container">
             <div className="navbar-logo">

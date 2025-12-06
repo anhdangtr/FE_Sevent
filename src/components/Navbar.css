@@ -74,7 +74,7 @@
 .nav-link.active::after {
   content: "";                                    /* Create pseudo-element */
   position: absolute;                             /* Position under text */
-  left: 50%;                                      /* Start from center */
+  left: 60%;                                      /* Start from center */
   bottom: -8px;                                   /* 8px below text */
   transform: translateX(-50%);                    /* Perfect centering */
   width: 70%;                                     /* Not full width – looks elegant */

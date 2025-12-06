@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import "./About.css"; // Import the About page CSS
 
 function About() {
+  const [activeNav, setActiveNav] = useState("home");
+
   return (
     <div className="about-container">
+       {/* <Navbar activeNav={activeNav} setActiveNav={setActiveNav} /> */}
       <div className="about-header">
         <h1>About Us</h1>
         <p>Learn more about our platform and the people behind it.</p>
