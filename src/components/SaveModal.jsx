@@ -19,10 +19,11 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token }) => {
     }
   }, [isOpen]);
 
+  //Lấy danh sách folder từ backend
   const fetchFolders = async () => {
     try {
       setFolderLoading(true);
-      const response = await axios.get(`${API_URL}/saved-events/folders`, {
+      const response = await axios.get(`${API_URL}/saved-events/get-folders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFolders(response.data.folders || []);
@@ -31,6 +32,29 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token }) => {
       setFolders([]);
     } finally {
       setFolderLoading(false);
+    }
+  };
+
+  // Tạo folder mới
+  const createFolder = async () => {
+    if (!newFolderName.trim()) {
+      setError("Vui lòng nhập tên folder");
+      return null;
+    }
+
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${API_URL}/saved-events/post-folders`,
+        { folderName: newFolderName.trim() },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      return response.data.folder;
+    } catch (err) {
+      setError(err.response?.data?.message || "Lỗi khi tạo folder");
+      return null;
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -125,7 +149,15 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token }) => {
               <div className="save-new-folder-actions">
                 <button
                   className="save-new-folder-confirm"
-                  onClick={() => setIsCreatingNew(false)}
+                  onClick={async () => {
+                    const created = await createFolder();
+                    if (created) {
+                      await fetchFolders();
+                      setSelectedFolder(created.name);
+                      setIsCreatingNew(false);
+                      setNewFolderName('');
+                    }
+                  }}
                 >
                   Xong
                 </button>

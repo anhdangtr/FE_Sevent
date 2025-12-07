@@ -1,88 +1,209 @@
+/* About.css – Modern 2025 Version */
 .about-container {
-  padding: 20px;
-  background-color: #f5f5f5;
-  color: #333;
-  margin-top: 80px; /* Adjust for the height of the Navbar */
+  margin-top: 250px;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #e0ecff 0%, #f8fbff 50%, #ffffff 100%);
+  padding: 140px 20px 120px;   /* TĂNG từ 100px → 140px hoặc 160px */
+  position: relative;
+  overflow: hidden;
 }
 
+.about-container::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><circle cx="200" cy="200" r="120" fill="%230077ff15"/><circle cx="800" cy="700" r="180" fill="%233b82f620"/><circle cx="900" cy="200" r="100" fill="%2300bcd415"/></svg>');
+  background-size: 180%;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Header */
 .about-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-top: 50px;
+  margin-bottom: 20px;
+  animation: fadeUp 1s ease;
 }
 
 .about-header h1 {
-  font-size: 2.5rem;
-  color: #004aad;
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #1e40af, #3b82f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
 }
 
 .about-header p {
-  font-size: 1.2rem;
-  color: #666;
+  font-size: 1.3rem;
+  color: #4b5563;
+  max-width: 700px;
+  margin: 0 auto; 
+  text-align: center; 
 }
 
+/* Content wrapper */
 .about-content {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0 auto;
 }
 
+/* Description card – Glassmorphism */
 .about-description {
-  text-align: center;
-  margin-bottom: 40px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  padding: 50px;
+  margin: 50px 0px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeUp 1s ease 0.2s both;
 }
 
 .about-description h2 {
-  font-size: 2rem;
-  margin-bottom: 15px;
+  font-size: 2.4rem;
+  color: #1e40af;
+  margin-bottom: 24px;
+  position: relative;
+  display: inline-block;
+}
+
+.about-description h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 80px;
+  height: 5px;
+  background: #3b82f6;
+  border-radius: 3px;
 }
 
 .about-description p {
-  font-size: 1.1rem;
-  color: #555;
+  font-size: 1.2rem;
+  line-height: 1.8;
+  color: #374151;
 }
 
-.founders-section {
-  text-align: center;
-}
-
+/* Founders Section */
 .founders-section h2 {
-  font-size: 2rem;
-  margin-bottom: 30px;
+  text-align: center;
+  font-size: 2.8rem;
+  margin-bottom: 80px;
+  color: #1e3a8a;
+  animation: fadeUp 1s ease 0.4s both;
 }
 
 .founders {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 60px;
+  justify-items: center;
 }
 
+/* Founder Card – Modern Glass + Hover Lift */
 .founder-card {
-  width: 250px;
-  background-color: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(15px);
+  border-radius: 24px;
+  padding: 40px 30px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15);
+  border: 1px solid rgba(59, 130, 246, 0.1);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: fadeUp 1s ease both;
 }
 
 .founder-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-20px) scale(1.04);
+  box-shadow: 0 25px 60px rgba(59, 130, 246, 0.3);
+  border-color: rgba(59, 130, 246, 0.4);
 }
 
 .founder-img {
-  width: 100%;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
+  border: 6px solid #3b82f6;
+  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+  transition: all 0.4s ease;
+}
+
+.founder-card:hover .founder-img {
+  transform: scale(1.12);
+  border-color: #1d4ed8;
 }
 
 .founder-card h3 {
-  font-size: 1.3rem;
-  color: #004aad;
+  font-size: 1.8rem;
+  color: #1e40af;
+  margin: 16px 0 8px;
 }
 
-.founder-card p {
-  font-size: 1rem;
-  color: #555;
+.founder-card p:nth-of-type(1) {
+  color: #3b82f6;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.founder-card p:nth-of-type(2) {
+  color: #4b5563;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+/* Social Icons */
+.founder-socials {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.founder-socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  background: #3b82f6;
+  color: white;
+  border-radius: 50%;
+  font-size: 1.4rem;
+  transition: all 0.3s ease;
+}
+
+.founder-socials a:hover {
+  background: #1d4ed8;
+  transform: translateY(-8px) scale(1.15);
+  box-shadow: 0 10px 20px rgba(29, 78, 216, 0.4);
+}
+
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-header h1 { font-size: 2.8rem; }
+  .about-header p { font-size: 1.1rem; }
+  .about-description { padding: 30px; }
+  .about-description h2 { font-size: 2rem; }
+  .founders-section h2 { font-size: 2.3rem; }
+  .founder-card { padding: 30px 20px; }
 }
