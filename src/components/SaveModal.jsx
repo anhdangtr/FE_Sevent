@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './SaveModal.css';
 
-const SaveModal = ({ eventId, isOpen, onClose, API_URL, token }) => {
+const SaveModal = ({ eventId, isOpen, onClose, API_URL, token, onSaveSuccess }) => {
   const [selectedFolder, setSelectedFolder] = useState('Watch later');
   const [folders, setFolders] = useState([]);
   const [isCreatingNew, setIsCreatingNew] = useState(false);
@@ -76,11 +76,22 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token }) => {
         folderName: folderToSave
       };
 
-      await axios.post(`${API_URL}/saved-events`, payload, {
+      const response = await axios.post(`${API_URL}/saved-events`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
       setSuccess('Lưu event thành công!');
+
+      // Trigger parent callback so it can update UI (button color, counters)
+      try {
+        if (onSaveSuccess) {
+          // Let parent increment its saveCount optimistically (no count returned here)
+          onSaveSuccess();
+        }
+      } catch (e) {
+        console.warn('onSaveSuccess callback error', e);
+      }
+
       setTimeout(() => {
         handleClose();
       }, 800);

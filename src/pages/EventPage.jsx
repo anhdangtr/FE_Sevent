@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import logoImage from "../assets/logo.png";
@@ -13,7 +13,9 @@ const EventPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
   const [likeCount, setLikeCount] = useState(0);
+  const [saveCount, setSaveCount] = useState(0);
   const [activeNav, setActiveNav] = useState("home");
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
   const [showReminderModal, setShowReminderModal] = useState(false);
@@ -24,6 +26,10 @@ const EventPage = () => {
   const token = localStorage.getItem("authToken");
 
   const location = useLocation();
+  
+  // Debounce refs
+  const likeTimeoutRef = useRef(null);
+  const saveTimeoutRef = useRef(null);
 
   useEffect(() => {
     // Require authentication before loading event details
@@ -38,12 +44,18 @@ const EventPage = () => {
       fetchEventDetails();
       if (isLoggedIn) {
         checkIfLiked();
+        checkIfSaved();
       }
     } else {
       console.warn('⚠️ No eventId provided');
       setError('Event ID không có');
       setLoading(false);
     }
+
+    return () => {
+      if (likeTimeoutRef.current) clearTimeout(likeTimeoutRef.current);
+      if (saveTimeoutRef.current) clearTimeout(saveTimeoutRef.current);
+    };
   }, [eventId, isLoggedIn, navigate, location]);
 
   const fetchEventDetails = async () => {
@@ -76,6 +88,7 @@ const EventPage = () => {
       if (response.data.success) {
         setEvent(response.data.data);
         setLikeCount(response.data.data.interestingCount || 0);
+        setSaveCount(response.data.data.saveCount || 0);
       } else {
         setError('Sự kiện không tồn tại');
       }
@@ -97,7 +110,7 @@ const EventPage = () => {
     try {
       const token = localStorage.getItem('authToken');
       if (!token) return;
-      const response = await axios.get(`${API_URL}/events/${eventId}/check-like`, {
+      const response = await axios.get(`${API_URL}/events/${eventId}/check-liked`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setIsLiked(response.data.isLiked);
@@ -106,30 +119,104 @@ const EventPage = () => {
     }
   };
 
-  const handleLikeClick = async () => {
-    if (!isLoggedIn) {
-      navigate('/auth/LogIn');
+  const checkIfSaved = async () => {
+    if (!isLoggedIn) return;
+
+    try {
+      const token = localStorage.getItem('authToken');
+      if (!token) return;
+      const response = await axios.get(`${API_URL}/events/${eventId}/check-saved`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setIsSaved(response.data.isSaved);
+      setSaveCount(response.data.saveCount || 0);
+    } catch (err) {
+      console.error('Check save error:', err);
+    }
+  };
+
+  const handleLikeClick = async (e) => {
+    e?.stopPropagation();
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/auth/LogIn", {
+        state: { from: location.pathname, message: "Vui lòng đăng nhập để truy cập sự kiện" }
+      });
       return;
     }
 
-    try {
-      const response = await axios.post(
-        `${API_URL}/events/${eventId}/toggle-like`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("authToken")}`
-          }
-        }
-      );
+    // Cập nhật UI ngay lập tức (Optimistic Update)
+    const newIsLiked = !isLiked;
+    setIsLiked(newIsLiked);
+    setLikeCount(newIsLiked ? likeCount + 1 : likeCount - 1);
 
-      if (response.data.success) {
-        setIsLiked(response.data.isLiked);
-        setLikeCount(response.data.interestingCount);
-      }
-    } catch (err) {
-      console.error("Like event error:", err);
+    // Hủy timeout cũ (nếu còn)
+    if (likeTimeoutRef.current) {
+      clearTimeout(likeTimeoutRef.current);
     }
+
+    // Đặt timeout mới - chờ 300ms rồi gửi API
+    likeTimeoutRef.current = setTimeout(async () => {
+      try {
+        const response = await axios.post(
+          `${API_URL}/events/${eventId}/toggle-like`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        );
+
+        if (response.data.success) {
+          // Cập nhật lại từ server (để sync)
+          setIsLiked(response.data.data.isLiked);
+          setLikeCount(response.data.data.interestingCount);
+        }
+      } catch (err) {
+        console.error("Like event error:", err);
+        // Revert nếu có lỗi
+        setIsLiked(!newIsLiked);
+        setLikeCount(newIsLiked ? likeCount - 1 : likeCount + 1);
+      } finally {
+        likeTimeoutRef.current = null;
+      }
+    }, 300);
+  };
+
+  const handleSaveClick = async (e) => {
+    e?.stopPropagation();
+
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+      navigate("/auth/LogIn", {
+        state: { from: location.pathname, message: "Vui lòng đăng nhập để truy cập sự kiện" }
+      });
+      return;
+    }
+    // If user HAS saved already -> unsave directly (no modal)
+    if (isSaved) {
+      try {
+        // optimistic UI: disable double clicks by briefly toggling
+        const resp = await axios.post(
+          `${API_URL}/events/${eventId}/toggle-save`,
+          {},
+          { headers: { Authorization: `Bearer ${token}` } }
+        );
+
+        if (resp.data && resp.data.success) {
+          setIsSaved(resp.data.isSaved);
+          setSaveCount(resp.data.saveCount);
+        }
+      } catch (err) {
+        console.error('Unsave error:', err);
+      }
+      return;
+    }
+
+    // If not saved -> open SaveModal so user can pick a folder
+    setShowSaveModal(true);
   };
 
   const handleNavClick = (nav, path) => {
@@ -160,7 +247,6 @@ const EventPage = () => {
   if (loading) {
     return (
       <div className="event-page-container">
-          {/* <Navbar activeNav={activeNav} setActiveNav={setActiveNav} /> */}
         <nav className="navbar">
           <div className="navbar-container">
             <div className="navbar-logo">
@@ -195,8 +281,6 @@ const EventPage = () => {
 
   return (
     <div className="event-page-container">
-      
-
       {/* Banner */}
       <div className="event-banner">
         {event.bannerUrl ? (
@@ -214,36 +298,44 @@ const EventPage = () => {
 
           {/* Action Buttons */}
           <div className="action-buttons">
-            <button
-              className="register-btn"
-              onClick={handleRegisterClick}
-              disabled={!event.registrationFormUrl}
-            >
-              Đăng ký
-            </button>
-            <button
-              className={`like-btn ${isLiked ? "liked" : ""}`}
-              onClick={handleLikeClick}
-            >
-              <span className="heart-icon">
-                {isLiked ? "❍" : "🤍"}
-              </span>
-              <span className="like-count">{likeCount}</span>
-            </button>
-            <button
-              className="register-btn"
-              onClick={() => setShowReminderModal(true)}
-              style={{ backgroundColor: '#FF9800' }}
-            >
-              ⏰ Reminder
-            </button>
-            <button
-              className="register-btn"
-              onClick={() => setShowSaveModal(true)}
-              style={{ backgroundColor: '#4CAF50' }}
-            >
-              💾 Save
-            </button>
+            <div className="buttons-left">
+              <button
+                className={`like-btn ${isLiked ? "liked" : ""}`}
+                onClick={handleLikeClick}
+              >
+                <span className="heart-icon">
+                  {isLiked ? "❤️" : "🤍"}
+                </span>
+                <span className="like-count">{likeCount}</span>
+              </button>
+
+              <button
+                className={`save-btn ${isSaved ? "saved" : ""}`}
+                onClick={handleSaveClick}
+              >
+                <span className="save-icon">
+                  {isSaved ? "🔖" : "🔖"}
+                </span>
+                <span className="save-count">{saveCount}</span>
+              </button>
+            </div>
+
+            <div className="buttons-right">
+              <button
+                className="action-btn reminder-btn"
+                onClick={() => setShowReminderModal(true)}
+              >
+                Reminder
+              </button>
+
+              <button
+                className="action-btn register-btn"
+                onClick={handleRegisterClick}
+                disabled={!event.registrationFormUrl}
+              >
+                Đăng ký
+              </button>
+            </div>
           </div>
 
           {/* Event Info Section */}
@@ -323,6 +415,11 @@ const EventPage = () => {
         eventId={eventId}
         isOpen={showSaveModal}
         onClose={() => setShowSaveModal(false)}
+        onSaveSuccess={() => {
+          // Parent callback invoked after successful save inside modal
+          setIsSaved(true);
+          setSaveCount((c) => c + 1);
+        }}
         API_URL={API_URL}
         token={token}
       />
