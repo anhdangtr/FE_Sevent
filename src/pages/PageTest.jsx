@@ -4,6 +4,7 @@ import EventCardTest from "../components/EventCardTest";
 import { useNavigate } from "react-router-dom";
 import "./PageTest.css";
 import Navbar from "../components/Navbar";
+import heroBg from "../assets/Event_UITEnglishConest.jpg";
 
 const PageTest = () => {
   const [events, setEvents] = useState([]);
@@ -100,26 +101,39 @@ const PageTest = () => {
        {/* <Navbar activeNav={activeNav} setActiveNav={setActiveNav} /> */}
 
       {/* Hero Section */}
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1>Where your eventure starts!</h1>
-          <p>Search and join the events you like</p>
+      {/* Hero Section */}
+          <section
+            className="hero-section"
+            style={{
+              backgroundImage: `url(${heroBg})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              position: "relative",
+            }}
+          >
+            {/* Overlay giảm opacity */}
+            <div className="hero-overlay"></div>
 
-          {/* Search Bar */}
-          <form className="search-form" onSubmit={handleSearch}>
-            <input
-              type="text"
-              placeholder="Event's name, location, ... or any keyword"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="search-input"
-            />
-            <button type="submit" className="search-btn">
-              Search
-            </button>
-          </form>
-        </div>
-      </section>
+            <div className="hero-content">
+              <h1>Where your eventure starts!</h1>
+              <p>Search and join the events you like</p>
+
+              {/* Search Bar */}
+              <form className="search-form" onSubmit={handleSearch}>
+                <input
+                  type="text"
+                  placeholder="Event's name, location, ... or any keyword"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  className="search-input"
+                />
+                <button type="submit" className="search-btn">
+                  Search
+                </button>
+              </form>
+            </div>
+          </section>
+
 
 
 
