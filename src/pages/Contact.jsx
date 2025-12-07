@@ -1,3 +1,4 @@
+
 // src/pages/Contact.jsx  (or wherever you put pages)
 import React from "react";
 import "./Contact.css";
@@ -73,6 +74,7 @@ function Contact() {
       </div>
     </div>
     </div>
+
   );
 }
 
