@@ -47,9 +47,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
 .save-modal-close:hover {
+  background: #f0f0f0;
   color: #2d2c3c;
 }
 
@@ -57,22 +60,62 @@
   padding: 24px;
 }
 
-.save-modal-body label {
+.save-modal-body > label {
   display: block;
   font-size: 14px;
   font-weight: 600;
   color: #2d2c3c;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
+/* Select Dropdown */
+.save-folder-select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232d2c3c' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.save-folder-select:hover {
+  border-color: #0088ff;
+}
+
+.save-folder-select:focus {
+  outline: none;
+  border-color: #0088ff;
+  box-shadow: 0 0 4px rgba(0, 136, 255, 0.2);
+}
+
+.save-folder-select:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.save-folder-select option {
+  padding: 8px 12px;
+}
+
+/* Input cho folder mới */
 .save-folder-input {
   width: 100%;
-  padding: 10px 12px;
+  padding: 12px;
   border: 1px solid #d9d9d9;
   border-radius: 6px;
   font-size: 14px;
   box-sizing: border-box;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  transition: all 0.2s;
 }
 
 .save-folder-input:focus {
@@ -81,12 +124,67 @@
   box-shadow: 0 0 4px rgba(0, 136, 255, 0.2);
 }
 
-.save-info-text {
-  margin: 0;
-  font-size: 12px;
-  color: #999;
+/* Nút tạo folder mới */
+.save-create-new-btn {
+  width: 100%;
+  padding: 10px 12px;
+  background: #f5f5f5;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #0088ff;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
+.save-create-new-btn:hover {
+  background: #efefef;
+  border-color: #0088ff;
+}
+
+.save-create-new-btn:active {
+  background: #e5e5e5;
+}
+
+/* Actions cho folder mới */
+.save-new-folder-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.save-new-folder-confirm,
+.save-new-folder-cancel {
+  flex: 1;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.save-new-folder-confirm {
+  background: #0088ff;
+  color: white;
+}
+
+.save-new-folder-confirm:hover {
+  background: #0077dd;
+}
+
+.save-new-folder-cancel {
+  background: #f0f0f0;
+  color: #2d2c3c;
+  border: 1px solid #d9d9d9;
+}
+
+.save-new-folder-cancel:hover {
+  background: #e5e5e5;
+}
+
+/* Error & Success Messages */
 .save-error {
   background: #fee;
   color: #d9534f;
@@ -94,6 +192,7 @@
   border-radius: 6px;
   font-size: 13px;
   margin: 0 24px 12px;
+  border-left: 4px solid #d9534f;
 }
 
 .save-success {
@@ -103,8 +202,10 @@
   border-radius: 6px;
   font-size: 13px;
   margin: 0 24px 12px;
+  border-left: 4px solid #5cb85c;
 }
 
+/* Modal Footer */
 .save-modal-footer {
   display: flex;
   justify-content: flex-end;
@@ -147,6 +248,7 @@
   cursor: not-allowed;
 }
 
+/* Responsive */
 @media (max-width: 480px) {
   .save-modal {
     max-width: 90%;
@@ -158,6 +260,15 @@
 
   .save-cancel-btn,
   .save-confirm-btn {
+    width: 100%;
+  }
+
+  .save-new-folder-actions {
+    flex-direction: column;
+  }
+
+  .save-new-folder-confirm,
+  .save-new-folder-cancel {
     width: 100%;
   }
 }

@@ -1,5 +1,6 @@
 .event-card {
   display: flex;
+  padding-bottom: 50px;
   flex-direction: column;
   border: 1px solid #ddd; /* adjust */
   border-radius: 8px;
