@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import FormInput from './FormInput';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const containerStyle = {
   width: '100%',
   maxWidth: '420px',
@@ -78,7 +80,7 @@ const SignUpForm = () => {
         passwordConfirm: form.passwordConfirm
       };
 
-      const res = await axios.post('http://localhost:5000/api/auth/signup', payload, { withCredentials: true });
+      const res = await axios.post(`${API_URL}/auth/signup`, payload, { withCredentials: true });
       setSuccess(res.data.message || 'Sign up successful');
       setForm({ name: '', email: '', password: '', passwordConfirm: '' });
 

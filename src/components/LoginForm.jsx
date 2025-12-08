@@ -3,6 +3,8 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import FormInput from './FormInput';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
 const containerStyle = {
   width: '100%',
   maxWidth: '420px',
@@ -66,7 +68,7 @@ const LoginForm = () => {
 
     try {
       const payload = { email: form.email, password: form.password };
-      const res = await axios.post('http://localhost:5000/api/auth/login', payload, { withCredentials: true });
+      const res = await axios.post(`${API_URL}/auth/login`, payload, { withCredentials: true });
       setSuccess(res.data.message || 'Login successful');
       // Persist token and user to localStorage
       if (res.data.token) {

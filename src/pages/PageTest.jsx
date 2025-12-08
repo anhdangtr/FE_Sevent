@@ -5,11 +5,6 @@ import { useNavigate } from "react-router-dom";
 import "./PageTest.css";
 import Navbar from "../components/Navbar";
 import heroBg from "../assets/Event_UITEnglishConest.jpg";
-import categoryAll from "../assets/Category_All.png";
-import categoryVolunteer from "../assets/Category_Volunteer.png";
-import categoryAcademic from "../assets/Category_Academic.png";
-import categoryEntertainment from "../assets/Category_Entertainment.png";
-import categoryConductScore from "../assets/Category_Conduct Score.png";
 
 const PageTest = () => {
   const [events, setEvents] = useState([]);
@@ -43,15 +38,7 @@ const PageTest = () => {
         category: category !== "all" ? category : undefined,
       };
 
-      const response = await axios.get(`${API_URL}/events`, {
-      params,
-     headers: {
-    "Cache-Control": "no-cache",
-    "Pragma": "no-cache",
-    "Expires": "0"
-  }
-});
-  
+      const response = await axios.get(`${API_URL}/events`, { params });
 
       if (response.data.success) {
         setEvents(response.data.data);
@@ -66,15 +53,9 @@ const PageTest = () => {
 
   const fetchTrendingEvents = async () => {
     try {
-
-    const response = await axios.get(`${API_URL}/events/trending`, {
-      params: { limit: 4 },
-      headers: {
-        "Cache-Control": "no-cache",
-        "Pragma": "no-cache",
-        "Expires": "0"
-      }
-    });
+      const response = await axios.get(`${API_URL}/events/trending`, {
+        params: { limit: 4 },
+      });
 
       if (response.data.success) {
         setTrendingEvents(response.data.data);
@@ -168,7 +149,7 @@ const PageTest = () => {
                     className={`category-option ${category === "all" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("all")}
                   >
-                    <img src={categoryAll} alt="All" />
+                    <img src="src/assets/Category_All.png" alt="All" />
                     <span className="category-name">All</span>
                   </div>
 
@@ -176,7 +157,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc73367d" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc73367d")}
                   >
-                    <img src={categoryVolunteer} alt="Volunteer" />
+                    <img src="src/assets/Category_Volunteer.png" alt="Volunteer" />
                     <span className="category-name">Volunteer</span>
                   </div>
 
@@ -184,7 +165,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc73367e" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc73367e")}
                   >
-                    <img src={categoryAcademic} alt="Academic" />
+                    <img src="src/assets/Category_Academic.png" alt="Academic" />
                     <span className="category-name">Academic</span>
                   </div>
 
@@ -192,7 +173,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc73367f" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc73367f")}
                   >
-                    <img src={categoryEntertainment} alt="Entertainment" />
+                    <img src="src/assets/Category_Entertainment.png" alt="Entertainment" />
                     <span className="category-name">Entertainment</span>
                   </div>
 
@@ -200,7 +181,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc733680" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc733680")}
                   >
-                    <img src={categoryConductScore} alt="Conduct score" />
+                    <img src="src/assets/Category_Conduct Score.png" alt="Conduct score" />
                     <span className="category-name">Conduct score</span>
                   </div>
                 </div>
