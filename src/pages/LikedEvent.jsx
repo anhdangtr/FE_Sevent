@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventCardTest from "../components/EventCardTest";
 import "./LikedEvent.css";
+import Navbar from "../components/Navbar";
 
 const LikedEvent = () => {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
   const [likedEvents, setLikedEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeNav, setActiveNav] = useState("home");
 
   useEffect(() => {
     fetchLiked();
@@ -57,6 +59,8 @@ const LikedEvent = () => {
   };
 
   return (
+    <>
+      <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
     <div className="liked-page">
       <section className="liked-banner">
         <div className="container">
@@ -79,6 +83,7 @@ const LikedEvent = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 
