@@ -43,7 +43,7 @@ const PageTest = () => {
         category: category !== "all" ? category : undefined,
       };
 
-      const response = await axios.get(`${API_URL}events`, { params });
+      const response = await axios.get(`${API_URL}/events`, { params });
 
       if (response.data.success) {
         setEvents(response.data.data);
@@ -58,7 +58,7 @@ const PageTest = () => {
 
   const fetchTrendingEvents = async () => {
     try {
-      const response = await axios.get(`${API_URL}events/trending`, {
+      const response = await axios.get(`${API_URL}/events/trending`, {
         params: { limit: 4 },
       });
 
