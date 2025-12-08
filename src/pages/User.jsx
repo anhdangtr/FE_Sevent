@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import "./User.css";
+import Navbar from "../components/Navbar";
 
 function User() {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState("");
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
+    const [activeNav, setActiveNav] = useState("user");
 
     const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
@@ -17,11 +19,21 @@ function User() {
     const fetchUser = async () => {
         try {
             const res = await fetch(`${API_URL}/user/getAllUser?page=${page}&search=${search}`);
+            
+            if (!res.ok) {
+                console.error(`API Error: ${res.status} ${res.statusText}`);
+                setUsers([]);
+                setTotalPages(1);
+                return;
+            }
+            
             const data = await res.json();
-            setUsers(data.users);
-            setTotalPages(data.totalPages);
+            setUsers(data.users || []);
+            setTotalPages(data.totalPages || 1);
         } catch (error) {
-            console.log(error);
+            console.error('Fetch error:', error);
+            setUsers([]);
+            setTotalPages(1);
         }
     };
 
@@ -82,59 +94,70 @@ function User() {
 
 
     return (
-        <div className="user-container">
-            <h2 className="user-caption">User Management</h2>
+        <div style={{ width: '100%', minHeight: '100vh', margin: 0, padding: 0 }}>
+            <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
+            <div className="user-container">
+                <h2 className="user-caption">User Management</h2>
 
-            <input
-                type="text"
-                placeholder="Search user..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                style={{
-                    padding: "10px",
-                    width: "260px",
-                    borderRadius: "6px",
-                    marginBottom: "10px",
-                    border: "1px solid #ccc"
-                }}
-            />
+                <input
+                    type="text"
+                    placeholder="Search user..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    style={{
+                        padding: "10px",
+                        width: "260px",
+                        borderRadius: "6px",
+                        marginBottom: "10px",
+                        border: "1px solid #ccc"
+                    }}
+                />
 
-            <table className="user-table">
-                <thead className="user-thead">
-                    <tr className="user-tr">
-                        <th className="user-th">Username</th>
-                        <th className="user-th">Email</th>
-                        <th className="user-th">Role</th>
-                        <th className="user-th">Action</th>
-                    </tr>
-                </thead>
-
-                <tbody className="user-tbody">
-                    {users.map((u) => (
-                        <tr className="user-tr" key={u._id}>
-                            <td className="user-td">{u.name}</td>
-                            <td className="user-td">{u.email}</td>
-                            <td className="user-td">{u.role}</td>
-                            <td className="user-td">
-                                <button className="btn-role" onClick={() => updateRole(u._id)}>
-                                    Change Role
-                                </button>
-                            </td>
+                <table className="user-table">
+                    <thead className="user-thead">
+                        <tr className="user-tr">
+                            <th className="user-th">Username</th>
+                            <th className="user-th">Email</th>
+                            <th className="user-th">Role</th>
+                            <th className="user-th">Action</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
 
-            <div style={{ marginTop: "20px", display: "flex", gap: "10px" , justifyContent:"center"}}>
-                <button disabled={page === 1} onClick={() => setPage(page - 1)}>
-                    Prev
-                </button>
-                <span>{page} / {totalPages}</span>
-                <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
-                    Next
-                </button>
+                    <tbody className="user-tbody">
+                        {users && users.length > 0 ? (
+                            users.map((u) => (
+                                <tr className="user-tr" key={u._id}>
+                                    <td className="user-td">{u.name}</td>
+                                    <td className="user-td">{u.email}</td>
+                                    <td className="user-td">{u.role}</td>
+                                    <td className="user-td">
+                                        <button className="btn-role" onClick={() => updateRole(u._id)}>
+                                            Change Role
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr className="user-tr">
+                                <td className="user-td" colSpan="4" style={{ textAlign: "center" }}>
+                                    No users found
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+
+                <div style={{ marginTop: "20px", display: "flex", gap: "10px" , justifyContent:"center"}}>
+                    <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+                        Prev
+                    </button>
+                    <span>{page} / {totalPages}</span>
+                    <button disabled={page === totalPages} onClick={() => setPage(page + 1)}>
+                        Next
+                    </button>
+                </div>
+
             </div>
-
         </div>
     );
 }

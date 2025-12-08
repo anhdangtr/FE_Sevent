@@ -39,7 +39,7 @@
 
 
 /* Desktop navigation links – perfectly centered in the middle */
-.nav-links {
+.navbar-nav-links {
   flex: 1;                                        /* Take all available space in the center */
   display: flex;                                  /* Horizontal layout */
   justify-content: center;                        /* Perfectly centered */
@@ -51,7 +51,7 @@
 }
 
 /* Individual navigation buttons (Home, About, Contact) */
-.nav-link {
+.navbar-nav-link {
   color: white;                                   /* White text */
   background: none;                               /* Transparent background */
   border: none;                                   /* No border */
@@ -65,13 +65,13 @@
   transition: all 0.3s ease;                      /* Smooth hover effects */
 }
 
-.nav-link:hover {
+.navbar-nav-link:hover {
   transform: translateY(-2px);                    /* Lift effect on hover */
   opacity: 0.9;                                   /* Slight fade for polish */
 }
 
 /* Active page indicator – yellow underline */
-.nav-link.active::after {
+.navbar-nav-link.active::after {
   content: "";                                    /* Create pseudo-element */
   position: absolute;                             /* Position under text */
   left: 60%;                                      /* Start from center */
@@ -84,7 +84,7 @@
 }
 
 /* Right side container for buttons or avatar */
-.auth-buttons {
+.navbar-auth-buttons {
   display: flex;                                  /* Horizontal layout */
   align-items: center;                            /* Vertically center */
   gap: 10px;                                      /* Increased space between Log in and Sign up */
@@ -92,8 +92,8 @@
 }
 
 /* Shared styles for Login and Sign Up buttons */
-.login-btn,
-.signup-btn {
+.navbar-login-btn,
+.navbar-signup-btn {
   padding: 10px 20px;                             /* Comfortable padding */
   border-radius: 10px;                            /* Modern rounded corners */
   font-weight: 700;                               /* Bold text */
@@ -106,21 +106,21 @@
 }
 
 /* Login button – glassmorphism style */
-.login-btn {
+.navbar-login-btn {
   background: rgba(255, 255, 255, 0.2);           /* Semi-transparent white */
   color: white;                                   /* White text */
   backdrop-filter: blur(10px);                    /* Frosted glass effect */
 }
 
 /* Sign Up button – solid yellow */
-.signup-btn {
+.navbar-signup-btn {
   background: #ffe047;                            /* Bright yellow background */
   color: #0088ff;                                 /* Dark blue text for contrast */
 }
 
 /* Hover state – both buttons turn red */
-.login-btn:hover,
-.signup-btn:hover {
+.navbar-login-btn:hover,
+.navbar-signup-btn:hover {
   background: #ff3b3b !important;                 /* Red background */
   color: #fff !important;                         /* White text */
   border-color: #ff3b3b !important;               /* Red border */
@@ -129,11 +129,11 @@
 }
 
 /* Avatar circle when user is logged in */
-.avatar-btn {
+.navbar-avatar-btn {
   width: 44px;                                    /* Fixed size */
   height: 44px;                                   /* Perfect circle */
   border-radius: 50%;                             /* Circle shape */
-  background: white;                              /* White background */
+  background: transparent;                        /* Transparent background */
   border: 3px solid #ffe047;                      /* Yellow ring */
   cursor: pointer;                                /* Clickable */
   overflow: hidden;                               /* Hide overflowing image */
@@ -141,21 +141,22 @@
   display: flex;                                  /* Center content */
   align-items: center;
   justify-content: center;
+  padding: 0;                                     /* Remove default button padding */
 }
 
-.avatar-btn:hover {
+.navbar-avatar-btn:hover {
   transform: scale(1.1);                          /* Slightly enlarge */
   box-shadow: 0 0 0 4px rgba(255, 224, 71, 0.4);   /* Yellow glow */
 }
 
-.avatar-btn img {
+.navbar-avatar-btn img {
   width: 100%;                                    /* Fill circle */
   height: 100%;
   object-fit: cover;                              /* Crop nicely */
 }
 
 /* Fallback when no avatar image – shows initial letter */
-.avatar-placeholder {
+.navbar-avatar-placeholder {
   width: 100%;                                    /* Full size */
   height: 100%;
   background: linear-gradient(135deg, #0066cc, #0088ff); /* Gradient background */
@@ -164,11 +165,12 @@
   justify-content: center;
   color: white;                                   /* White letter */
   font-weight: bold;                              /* Bold initial */
-  font-size: 18px;                                /* Large letter */
+  font-size: 16px;                                /* Large letter */
+  border-radius: 50%;                             /* Ensure circular shape */
 }
 
 /* Dropdown menu under avatar */
-.avatar-menu {
+.navbar-avatar-menu {
   position: absolute;                             /* Float below avatar */
   top: calc(100% + 12px);                         /* 12px gap from avatar */
   right: 0;                                       /* Align to right */
@@ -177,16 +179,16 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);      /* Deep shadow */
   width: 300px;                               /* Increased width for profile info */
   overflow: hidden;                               /* Clip corners */
-  animation: fadeIn 0.3s ease;                    /* Fade in animation */
+  animation: navbarFadeIn 0.3s ease;                    /* Fade in animation */
 }
 
-@keyframes fadeIn {
+@keyframes navbarFadeIn {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
 /* Profile info section at the top */
-.avatar-menu-header {
+.navbar-avatar-menu-header {
   padding: 16px 20px;                             /* Comfortable padding */
   border-bottom: 1px solid #f0f0f0;               /* Divider line */
   display: flex;
@@ -194,7 +196,7 @@
   gap: 12px;
 }
 
-.avatar-menu-avatar {
+.navbar-avatar-menu-avatar {
   width: 44px;                                    /* Avatar circle */
   height: 44px;
   border-radius: 50%;
@@ -208,11 +210,11 @@
   font-size: 16px;
 }
 
-.avatar-menu-info {
+.navbar-avatar-menu-info {
   flex: 1;
 }
 
-.avatar-menu-name {
+.navbar-avatar-menu-name {
   font-weight: 700;                               /* Bold name */
   color: #333;
   font-size: 14px;
@@ -220,14 +222,14 @@
   margin-bottom: 4px;
 }
 
-.avatar-menu-subtitle {
+.navbar-avatar-menu-subtitle {
   font-size: 12px;
   color: #999;
   margin: 0;
   margin-bottom: 4px;
 }
 
-.avatar-menu-email {
+.navbar-avatar-menu-email {
   font-size: 12px;
   color: #666;
   margin: 0;
@@ -235,7 +237,7 @@
 }
 
 /* Menu items inside avatar dropdown */
-.avatar-menu-item {
+.navbar-avatar-menu-item {
   width: 100%;                                    /* Full width */
   padding: 12px 20px;                             /* Comfortable padding */
   background: none;                               /* Transparent */
@@ -248,11 +250,11 @@
   font-weight: 500;
 }
 
-.avatar-menu-item:hover {
+.navbar-avatar-menu-item:hover {
   background: #f5f5f5;                            /* Light gray hover */
 }
 
-.avatar-menu-item:last-child {
+.navbar-avatar-menu-item:last-child {
   color: #e74c3c;                                 /* Red text for Logout */
   font-weight: 600;                               /* Slightly bolder */
   border-top: 1px solid #f0f0f0;                  /* Divider before logout */
@@ -260,12 +262,12 @@
   padding-top: 12px;
 }
 
-.avatar-menu-item:last-child:hover {
+.navbar-avatar-menu-item:last-child:hover {
   background: #ffeaea;                            /* Light red hover */
 }
 
 /* Hamburger icon – visible only on mobile */
-.hamburger {
+.navbar-hamburger {
   display: none;                                  /* Hidden on desktop */
   flex-direction: column;                         /* Vertical lines */
   gap: 5px;                                       /* Space between lines */
@@ -273,7 +275,7 @@
   padding: 8px;                                   /* Larger tap area */
 }
 
-.hamburger span {
+.navbar-hamburger span {
   width: 28px;                                    /* Line width */
   height: 3px;                                    /* Line thickness */
   background: white;                              /* White lines */
@@ -282,12 +284,12 @@
 }
 
 /* Hamburger to X animation when active */
-.hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
-.hamburger.active span:nth-child(2) { opacity: 0; }
-.hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -8px); }
+.navbar-hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+.navbar-hamburger.active span:nth-child(2) { opacity: 0; }
+.navbar-hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(7px, -8px); }
 
 /* Mobile menu that appears below navbar */
-.mobile-menu {
+.navbar-mobile-menu {
   position: absolute;                             /* Overlay below navbar */
   top: 100%;                                      /* Directly under navbar */
   left: 0;                                        /* Full width */
@@ -297,16 +299,16 @@
   display: flex;
   flex-direction: column;
   gap: 20px;                                      /* Space between items */
-  animation: slideDown 0.4s ease;                 /* Slide down effect */
+  animation: navbarSlideDown 0.4s ease;                 /* Slide down effect */
   box-shadow: 0 10px 20px rgba(0, 0,  0,  0,  0.2); /* Shadow */
 }
 
-@keyframes slideDown {
+@keyframes navbarSlideDown {
   from { opacity: 0; transform: translateY(-20px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-.mobile-menu .nav-link {
+.navbar-mobile-menu .navbar-nav-link {
   font-size: 18px;                                /* Larger text on mobile */
   padding: 12px 0;                                /* Vertical spacing */
   text-align: center;                             /* Centered */
@@ -314,28 +316,28 @@
 
 /* Tablet adjustments */
 @media (max-width: 1024px) {
-  .nav-links {
+  .navbar-nav-links {
     gap: 32px;                                      /* Smaller gap on tablets */
   }
 }
 
 /* Mobile layout – hide desktop menu, show hamburger */
 @media (max-width: 868px) {
-  .nav-links,
-  .auth-buttons > .login-btn,
-  .auth-buttons > .signup-btn {
+  .navbar-nav-links,
+  .navbar-auth-buttons > .navbar-login-btn,
+  .navbar-auth-buttons > .navbar-signup-btn {
     display: none;                                  /* Hide desktop elements */
   }
 
-  .hamburger {
+  .navbar-hamburger {
     display: flex;                                  /* Show hamburger */
   }
 
-  .auth-buttons {
+  .navbar-auth-buttons {
     gap: 12px;                                      /* Adjust spacing */
   }
 
-  .avatar-btn {
+  .navbar-avatar-btn {
     width: 40px;                                    /* Slightly smaller avatar */
     height: 40px;
   }

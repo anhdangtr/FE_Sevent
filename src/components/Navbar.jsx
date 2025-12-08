@@ -64,10 +64,10 @@ const Navbar = ({ activeNav, setActiveNav }) => {
         </div>
 
         {/* Menu căn giữa */}
-        <ul className="nav-links">
+        <ul className="navbar-nav-links">
           <li>
             <button
-              className={`nav-link ${activeNav === "home" ? "active" : ""}`}
+              className={`navbar-nav-link ${activeNav === "home" ? "active" : ""}`}
               onClick={() => handleNavClick("home", "/")}
             >
               Home
@@ -75,7 +75,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
           </li>
           <li>
             <button
-              className={`nav-link ${activeNav === "about" ? "active" : ""}`}
+              className={`navbar-nav-link ${activeNav === "about" ? "active" : ""}`}
               onClick={() => handleNavClick("about", "/about")}
             >
               About
@@ -83,7 +83,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
           </li>
           <li>
             <button
-              className={`nav-link ${activeNav === "contact" ? "active" : ""}`}
+              className={`navbar-nav-link ${activeNav === "contact" ? "active" : ""}`}
               onClick={() => handleNavClick("contact", "/contact")}
             >
               Contact
@@ -92,7 +92,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
           {user?.role === "admin" && (
             <li>
               <button 
-                className={`nav-link ${activeNav === "user" ? "active" : ""}`} 
+                className={`navbar-nav-link ${activeNav === "user" ? "active" : ""}`} 
                 onClick={() => handleNavClick("user", "/user")}
               >
                 User
@@ -102,17 +102,17 @@ const Navbar = ({ activeNav, setActiveNav }) => {
         </ul>
 
         {/* Nút bên phải: Login / Sign up hoặc Avatar */}
-        <div className="auth-buttons">
+        <div className="navbar-auth-buttons">
           {!isLoggedIn ? (
             <>
               <button
-                className="login-btn"
+                className="navbar-login-btn"
                 onClick={() => navigate("/auth/LogIn")}
               >
                 Login
               </button>
               <button
-                className="signup-btn"
+                className="navbar-signup-btn"
                 onClick={() => navigate("/auth/SignUp")}
               >
                 Sign up
@@ -121,39 +121,32 @@ const Navbar = ({ activeNav, setActiveNav }) => {
           ) : (
             <div style={{ position: "relative" }}>
               <button
-                className="login-btn"
+                className="navbar-avatar-btn"
                 onClick={toggleAvatarMenu}
                 aria-haspopup="true"
                 aria-expanded={showAvatarMenu}
               >
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: 28,
-                    height: 28,
-                    borderRadius: "50%",
-                    background: "#fff",
-                    marginRight: 8
-                  }}
-                />
+                <div className="navbar-avatar-placeholder">
+                  {userInfo?.email?.[0]?.toUpperCase() || "U"}
+                </div>
               </button>
               {showAvatarMenu && (
-                <div className="avatar-menu" onMouseLeave={closeAvatarMenu}>
+                <div className="navbar-avatar-menu" onMouseLeave={closeAvatarMenu}>
                   {/* Profile Info Section */}
-                  <div className="avatar-menu-header">
-                    <div className="avatar-menu-avatar">
+                  <div className="navbar-avatar-menu-header">
+                    <div className="navbar-avatar-menu-avatar">
                       {userInfo?.email?.[0]?.toUpperCase() || "U"}
                     </div>
-                    <div className="avatar-menu-info">
-                      <p className="avatar-menu-name">{userInfo?.name || "User"}</p>
-                      <p className="avatar-menu-subtitle">Tài khoản đã xác thực</p>
-                      <p className="avatar-menu-email">{userInfo?.email || ""}</p>
+                    <div className="navbar-avatar-menu-info">
+                      <p className="navbar-avatar-menu-name">{userInfo?.name || "User"}</p>
+                      <p className="navbar-avatar-menu-subtitle">Tài khoản đã xác thực</p>
+                      <p className="navbar-avatar-menu-email">{userInfo?.email || ""}</p>
                     </div>
                   </div>
 
                   {/* Menu Items */}
                   <button
-                    className="avatar-menu-item"
+                    className="navbar-avatar-menu-item"
                     onClick={() => {
                       navigate("/liked");
                       closeAvatarMenu();
@@ -162,7 +155,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
                     Liked event
                   </button>
                   <button
-                    className="avatar-menu-item"
+                    className="navbar-avatar-menu-item"
                     onClick={() => {
                       navigate("/saved");
                       closeAvatarMenu();
@@ -171,7 +164,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
                     Saved event
                   </button>
                   <button
-                    className="avatar-menu-item"
+                    className="navbar-avatar-menu-item"
                     onClick={() => {
                       navigate("/reminders");
                       closeAvatarMenu();
@@ -180,7 +173,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
                     Reminders
                   </button>
                   <button
-                    className="avatar-menu-item"
+                    className="navbar-avatar-menu-item"
                     onClick={() => {
                       localStorage.removeItem("authToken");
                       localStorage.removeItem("user");

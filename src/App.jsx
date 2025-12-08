@@ -10,7 +10,7 @@ import ReminderList from './pages/ReminderList';
 import RequireAuth from './components/RequireAuth';
 import Contact from './pages/Contact';
 import About from './pages/About';
-import Navbar from "./components/Navbar";
+
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import User from './pages/User';
 
@@ -21,7 +21,6 @@ function App() {
 
   return (
     <Router>
-      <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
       <Routes>
         <Route path="/" element={<PageTest />} />
         <Route path="/PageTest" element={<PageTest />} />

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import EventCardTest from "../components/EventCardTest";
 import "./SavedEvent.css";
+import Navbar from "../components/Navbar";
 
 const SavedEvent = () => {
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
@@ -10,6 +11,7 @@ const SavedEvent = () => {
   const [activeFolder, setActiveFolder] = useState(null);
   const [folderEvents, setFolderEvents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [activeNav, setActiveNav] = useState("home");
 
   useEffect(() => {
     fetchSaved();
@@ -73,7 +75,7 @@ const SavedEvent = () => {
   };
 
   return (
-    <div className="saved-page">
+    <><Navbar activeNav={activeNav} setActiveNav={setActiveNav} /><div className="saved-page">
       <section className="saved-banner">
         <div className="container">
           <h1>Event đã lưu</h1>
@@ -126,7 +128,7 @@ const SavedEvent = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div></>
   );
 };
 

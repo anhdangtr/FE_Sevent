@@ -1,13 +1,16 @@
 
 // src/pages/Contact.jsx  (or wherever you put pages)
-import React from "react";
+import React, { useState } from "react";
 import "./Contact.css";
 import { FaFacebookF, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 
 function Contact() {
+    const [activeNav, setActiveNav] = useState("contact");
 
   return (
+        <>
+      <Navbar activeNav={activeNav} setActiveNav={setActiveNav} />
     <div className="contact-page">
       <div className="contact-container">
       {/* Hero Header */}
@@ -74,7 +77,7 @@ function Contact() {
       </div>
     </div>
     </div>
-
+      </>
   );
 }
 

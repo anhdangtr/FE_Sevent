@@ -1,9 +1,8 @@
 .user-container {
-    width: 100vw;
-    min-height: 100vh;
+    width: 100%;
+    min-height: calc(100vh - 60px);
     background: linear-gradient(135deg, #e0ecff 0%, #f8fbff 50%, #ffffff 100%);
     padding: 20px;
-    margin-top: 62px;
     box-sizing: border-box;
 }
 
