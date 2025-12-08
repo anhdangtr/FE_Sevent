@@ -89,7 +89,7 @@ const SavedEvent = () => {
         ) : (
           <div className="saved-cards">
             {savedItems && savedItems.length > 0 ? (
-              savedItems.slice(0, 6).map(ev => (
+              savedItems.slice(0, 4).map(ev => (
                 <EventCardTest key={ev._id} event={ev} />
               ))
             ) : (

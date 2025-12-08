@@ -304,7 +304,7 @@ const EventPage = () => {
                   onClick={handleRegisterClick}
                   disabled={!event.registrationFormUrl}
                 >
-                  Đăng ký
+                  Register
                 </button>
               </div>
             </div>

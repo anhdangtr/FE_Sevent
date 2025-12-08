@@ -9,6 +9,8 @@ const LikedEvent = () => {
   const [likedEvents, setLikedEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeNav, setActiveNav] = useState("home");
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 12;
 
   useEffect(() => {
     fetchLiked();
@@ -73,13 +75,39 @@ const LikedEvent = () => {
         {loading ? (
           <div>Đang tải...</div>
         ) : (
-          <div className="liked-cards">
-            {likedEvents && likedEvents.length > 0 ? (
-              likedEvents.map(ev => <EventCardTest key={ev._id} event={ev} />)
-            ) : (
-              <div>Bạn chưa thích sự kiện nào</div>
+          <>
+            <div className="liked-cards">
+              {likedEvents && likedEvents.length > 0 ? (
+                likedEvents
+                  .slice((currentPage - 1) * eventsPerPage, currentPage * eventsPerPage)
+                  .map(ev => <EventCardTest key={ev._id} event={ev} />)
+              ) : (
+                <div>Bạn chưa thích sự kiện nào</div>
+              )}
+            </div>
+            
+            {likedEvents && likedEvents.length > eventsPerPage && (
+              <div className="pagination-controls">
+                <button 
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                  className="pagination-btn"
+                >
+                  Previous
+                </button>
+                <span className="pagination-info">
+                  Page {currentPage} of {Math.ceil(likedEvents.length / eventsPerPage)}
+                </span>
+                <button 
+                  onClick={() => setCurrentPage(prev => Math.min(Math.ceil(likedEvents.length / eventsPerPage), prev + 1))}
+                  disabled={currentPage === Math.ceil(likedEvents.length / eventsPerPage)}
+                  className="pagination-btn"
+                >
+                  Next
+                </button>
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>
