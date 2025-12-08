@@ -5,6 +5,11 @@ import { useNavigate } from "react-router-dom";
 import "./PageTest.css";
 import Navbar from "../components/Navbar";
 import heroBg from "../assets/Event_UITEnglishConest.jpg";
+import categoryAll from "../assets/Category_All.png";
+import categoryVolunteer from "../assets/Category_Volunteer.png";
+import categoryAcademic from "../assets/Category_Academic.png";
+import categoryEntertainment from "../assets/Category_Entertainment.png";
+import categoryConductScore from "../assets/Category_Conduct Score.png";
 
 const PageTest = () => {
   const [events, setEvents] = useState([]);
@@ -149,7 +154,7 @@ const PageTest = () => {
                     className={`category-option ${category === "all" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("all")}
                   >
-                    <img src="src/assets/Category_All.png" alt="All" />
+                    <img src={categoryAll} alt="All" />
                     <span className="category-name">All</span>
                   </div>
 
@@ -157,7 +162,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc73367d" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc73367d")}
                   >
-                    <img src="src/assets/Category_Volunteer.png" alt="Volunteer" />
+                    <img src={categoryVolunteer} alt="Volunteer" />
                     <span className="category-name">Volunteer</span>
                   </div>
 
@@ -165,7 +170,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc73367e" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc73367e")}
                   >
-                    <img src="src/assets/Category_Academic.png" alt="Academic" />
+                    <img src={categoryAcademic} alt="Academic" />
                     <span className="category-name">Academic</span>
                   </div>
 
@@ -173,7 +178,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc73367f" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc73367f")}
                   >
-                    <img src="src/assets/Category_Entertainment.png" alt="Entertainment" />
+                    <img src={categoryEntertainment} alt="Entertainment" />
                     <span className="category-name">Entertainment</span>
                   </div>
 
@@ -181,7 +186,7 @@ const PageTest = () => {
                     className={`category-option ${category === "6935c87fdf7bfe8ffc733680" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("6935c87fdf7bfe8ffc733680")}
                   >
-                    <img src="src/assets/Category_Conduct Score.png" alt="Conduct score" />
+                    <img src={categoryConductScore} alt="Conduct score" />
                     <span className="category-name">Conduct score</span>
                   </div>
                 </div>
