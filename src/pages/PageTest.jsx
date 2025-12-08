@@ -43,7 +43,15 @@ const PageTest = () => {
         category: category !== "all" ? category : undefined,
       };
 
-      const response = await axios.get(`${API_URL}/events`, { params });
+      const response = await axios.get(`${API_URL}/events`, {
+      params,
+     headers: {
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache",
+    "Expires": "0"
+  }
+});
+  
 
       if (response.data.success) {
         setEvents(response.data.data);
@@ -58,9 +66,15 @@ const PageTest = () => {
 
   const fetchTrendingEvents = async () => {
     try {
-      const response = await axios.get(`${API_URL}/events/trending`, {
-        params: { limit: 4 },
-      });
+
+    const response = await axios.get(`${API_URL}/events/trending`, {
+      params: { limit: 4 },
+      headers: {
+        "Cache-Control": "no-cache",
+        "Pragma": "no-cache",
+        "Expires": "0"
+      }
+    });
 
       if (response.data.success) {
         setTrendingEvents(response.data.data);
