@@ -54,7 +54,7 @@ const PageTest = () => {
   const fetchTrendingEvents = async () => {
     try {
       const response = await axios.get(`${API_URL}/events/trending`, {
-        params: { limit: 3 },
+        params: { limit: 4 },
       });
 
       if (response.data.success) {
