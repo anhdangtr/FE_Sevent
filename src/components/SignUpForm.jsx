@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import FormInput from './FormInput';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -139,7 +139,7 @@ const SignUpForm = () => {
       <button type="submit" style={buttonStyle}>Create</button>
       <br />
         <p style={loginLink}>
-          Already have an account? <a href="/auth/LogIn">Login</a>
+          Already have an account? <Link to="/auth/LogIn">Login</Link>
         </p>
     </form>
   );

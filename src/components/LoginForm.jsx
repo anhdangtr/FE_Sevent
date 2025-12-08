@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import FormInput from './FormInput';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
@@ -119,12 +119,12 @@ const LoginForm = () => {
         error={errors.password}
       />
 
-      <a href="/forgot" style={smallLinkStyle}>Forgot password?</a>
+      <Link to="/forgot" style={smallLinkStyle}>Forgot password?</Link>
 
       <button type="submit" style={buttonStyle}>Log in</button>
       <br />
        <p style={registerLink}>
-         Don't have an account? <a href="/auth/SignUp">Sign up</a>
+         Don't have an account? <Link to="/auth/SignUp">Sign up</Link>
         </p>
     </form>
   );
