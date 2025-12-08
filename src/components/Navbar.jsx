@@ -1,27 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import logoImage from "../assets/logo.png";
 import "./Navbar.css";
-import { useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 const Navbar = ({ activeNav, setActiveNav }) => {
   const navigate = useNavigate();
   const [showAvatarMenu, setShowAvatarMenu] = useState(false);
+  const [userInfo, setUserInfo] = useState(null);
   const isLoggedIn = !!localStorage.getItem("authToken");
   let user = null;
 
   try {
     const token = localStorage.getItem("authToken");
-    // console.log(token);
-    if (token) 
-      {
-        user = jwtDecode(token)
-      };
-    // console.log(user);
+    if (token) {
+      user = jwtDecode(token);
+    }
   } catch (err) {
     console.error("Decode token error", err);
   }
+
+  // Fetch user profile từ API
+  useEffect(() => {
+    if (isLoggedIn && user?.id) {
+      const fetchUserProfile = async () => {
+        try {
+          const token = localStorage.getItem("authToken");
+          const response = await fetch(`${API_URL}/info/${user.id}/profile`, {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+          
+          if (response.ok) {
+            const data = await response.json();
+            setUserInfo(data);
+          }
+        } catch (error) {
+          console.error("Fetch user profile error", error);
+        }
+      };
+      
+      fetchUserProfile();
+    }
+  }, [isLoggedIn, user?.id]);
 
   const handleNavClick = (nav, path) => {
     setActiveNav(nav);
@@ -65,15 +89,16 @@ const Navbar = ({ activeNav, setActiveNav }) => {
               Contact
             </button>
           </li>
-          {
-            user?.role === "admin" && (
-              <li>
-                <button className={`nav-link ${activeNav === "user" ? "active" : ""}`} onClick={() => handleNavClick("user", "/user")}>
-                  User
-                </button>
-              </li>
-            )}
-
+          {user?.role === "admin" && (
+            <li>
+              <button 
+                className={`nav-link ${activeNav === "user" ? "active" : ""}`} 
+                onClick={() => handleNavClick("user", "/user")}
+              >
+                User
+              </button>
+            </li>
+          )}
         </ul>
 
         {/* Nút bên phải: Login / Sign up hoặc Avatar */}
@@ -114,15 +139,19 @@ const Navbar = ({ activeNav, setActiveNav }) => {
               </button>
               {showAvatarMenu && (
                 <div className="avatar-menu" onMouseLeave={closeAvatarMenu}>
-                  <button
-                    className="avatar-menu-item"
-                    onClick={() => {
-                      navigate("/interests");
-                      closeAvatarMenu();
-                    }}
-                  >
-                    Interesting event
-                  </button>
+                  {/* Profile Info Section */}
+                  <div className="avatar-menu-header">
+                    <div className="avatar-menu-avatar">
+                      {userInfo?.email?.[0]?.toUpperCase() || "U"}
+                    </div>
+                    <div className="avatar-menu-info">
+                      <p className="avatar-menu-name">{userInfo?.name || "User"}</p>
+                      <p className="avatar-menu-subtitle">Tài khoản đã xác thực</p>
+                      <p className="avatar-menu-email">{userInfo?.email || ""}</p>
+                    </div>
+                  </div>
+
+                  {/* Menu Items */}
                   <button
                     className="avatar-menu-item"
                     onClick={() => {
@@ -140,15 +169,6 @@ const Navbar = ({ activeNav, setActiveNav }) => {
                     }}
                   >
                     Saved event
-                  </button>
-                  <button
-                    className="avatar-menu-item"
-                    onClick={() => {
-                      navigate("/liked");
-                      closeAvatarMenu();
-                    }}
-                  >
-                    Liked event
                   </button>
                   <button
                     className="avatar-menu-item"

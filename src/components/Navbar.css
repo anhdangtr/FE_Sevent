@@ -175,7 +175,7 @@
   background: white;                              /* White background */
   border-radius: 12px;                            /* Rounded */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);      /* Deep shadow */
-  min-width: 220px;                               /* Minimum width */
+  width: 300px;                               /* Increased width for profile info */
   overflow: hidden;                               /* Clip corners */
   animation: fadeIn 0.3s ease;                    /* Fade in animation */
 }
@@ -185,26 +185,79 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Profile info section at the top */
+.avatar-menu-header {
+  padding: 16px 20px;                             /* Comfortable padding */
+  border-bottom: 1px solid #f0f0f0;               /* Divider line */
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.avatar-menu-avatar {
+  width: 44px;                                    /* Avatar circle */
+  height: 44px;
+  border-radius: 50%;
+  background: #f0f8ff;                            /* Light blue background */
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #0088ff;
+  font-size: 16px;
+}
+
+.avatar-menu-info {
+  flex: 1;
+}
+
+.avatar-menu-name {
+  font-weight: 700;                               /* Bold name */
+  color: #333;
+  font-size: 14px;
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.avatar-menu-subtitle {
+  font-size: 12px;
+  color: #999;
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.avatar-menu-email {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  word-break: break-all;
+}
+
 /* Menu items inside avatar dropdown */
 .avatar-menu-item {
   width: 100%;                                    /* Full width */
-  padding: 14px 20px;                             /* Comfortable padding
+  padding: 12px 20px;                             /* Comfortable padding */
   background: none;                               /* Transparent */
   border: none;                                   /* No border */
   text-align: left;                               /* Left aligned text */
-  font-size: 14px;                                /* Readable */
+  font-size: 13px;                                /* Readable */
   color: #333;                                    /* Dark text */
-  cursor: pointer;                                /* Clickable
+  cursor: pointer;                                /* Clickable */
   transition: background 0.2s;                    /* Hover effect */
+  font-weight: 500;
 }
 
 .avatar-menu-item:hover {
-  background: #f0f8ff;                            /* Light blue hover */
+  background: #f5f5f5;                            /* Light gray hover */
 }
 
 .avatar-menu-item:last-child {
   color: #e74c3c;                                 /* Red text for Logout */
   font-weight: 600;                               /* Slightly bolder */
+  border-top: 1px solid #f0f0f0;                  /* Divider before logout */
+  margin-top: 4px;
+  padding-top: 12px;
 }
 
 .avatar-menu-item:last-child:hover {
