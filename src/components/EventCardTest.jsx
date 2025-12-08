@@ -301,13 +301,13 @@ const handleSave = async (e) => {
         {/* Date & Time */}
         <div className="event-datetime">
           <div className="datetime-item">
-            <span className="datetime-icon">📅</span>
+            <span className="datetime-icon">Start: </span>
             <span className="datetime-text">
               {formatDate(event.startDate)} {formatTime(event.startDate)}
             </span>
           </div>
           <div className="datetime-item">
-            <span className="datetime-icon">🏁</span>
+            <span className="datetime-icon">End: </span>
             <span className="datetime-text">
               {formatDate(event.endDate)} {formatTime(event.endDate)}
             </span>
@@ -317,7 +317,7 @@ const handleSave = async (e) => {
         {/* Location */}
         {event.location && (
           <div className="event-location">
-            <span className="location-icon">📍</span>
+            <span className="location-icon">Location: </span>
             <span className="location-text">{event.location}</span>
           </div>
         )}

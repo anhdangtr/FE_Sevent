@@ -139,7 +139,6 @@ const PageTest = () => {
               </div>
             )}
 
-
             {/* Categories */}
             {page === 1 && !search && (
               <div className="filters">
@@ -150,7 +149,7 @@ const PageTest = () => {
                     className={`category-option ${category === "all" ? "active" : ""}`}
                     onClick={() => handleCategoryChange("all")}
                   >
-                    <span style={{ fontSize: 28, marginRight: 8 }}>📂</span>
+                    <img src="src/assets/Category_All.png" alt="All" />
                     <span className="category-name">All</span>
                   </div>
 
