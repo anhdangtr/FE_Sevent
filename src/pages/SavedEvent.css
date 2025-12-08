@@ -1,0 +1,52 @@
+.saved-banner, .liked-banner {
+  background: #0586d6; /* similar blue banner */
+  color: #fff;
+  padding: 28px 0;
+  margin-bottom: 24px;
+}
+
+.saved-banner h1, .liked-banner h1 {
+  margin: 0;
+  font-size: 28px;
+}
+
+.saved-content, .liked-content {
+  padding-bottom: 40px;
+}
+
+.saved-cards, .liked-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.section-title {
+  margin: 16px 0;
+}
+
+.folders-section {
+  margin-top: 32px;
+}
+
+.folder-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.folder-btn {
+  background: transparent;
+  border: 1px solid #ddd;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+}
+
+.folder-icon { font-size: 22px; }
+.folder-name { font-weight: 600; }
+.folder-count { margin-left: auto; color: #666; }
+
+.folder-events { margin-top: 12px; display:flex; gap:12px; flex-wrap:wrap; }

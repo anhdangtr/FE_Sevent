@@ -1,0 +1,13 @@
+.reminder-banner {
+  background: #0586d6;
+  color: #fff;
+  padding: 28px 0;
+  margin-bottom: 20px;
+}
+.reminder-banner h1 { margin: 0; font-size: 28px; }
+.reminder-content { padding-bottom: 40px; }
+.reminder-list { display: flex; flex-direction: column; gap: 20px; }
+.reminder-item { display: flex; gap: 16px; align-items: flex-start; }
+.reminder-details { background: #f8f8f8; padding: 12px; border-radius: 6px; min-width: 220px; }
+.reminder-details h4 { margin: 0 0 8px 0; }
+.reminder-details ul { margin: 0; padding-left: 16px; }

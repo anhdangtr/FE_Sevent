@@ -64,9 +64,11 @@ const LoginForm = () => {
       // Persist token and user to localStorage
       if (res.data.token) {
         localStorage.setItem('authToken', res.data.token);
+        console.log(res.data.token);
       }
       if (res.data.user) {
         localStorage.setItem('user', JSON.stringify(res.data.user));
+        console.log(res.data.user);
       }
       // Optionally save token: localStorage.setItem('token', res.data.token)
       // Redirect to original page if provided, otherwise to home

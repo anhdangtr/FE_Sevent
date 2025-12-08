@@ -1,0 +1,14 @@
+.liked-banner {
+  background: #0586d6;
+  color: #fff;
+  padding: 28px 0;
+  margin-bottom: 24px;
+}
+
+.liked-banner h1 { margin: 0; font-size: 28px; }
+
+.liked-content { padding-bottom: 40px; }
+
+.liked-cards { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.section-title { margin: 16px 0; }

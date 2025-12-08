@@ -1,0 +1,134 @@
+.user-container {
+    width: 100vw;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #e0ecff 0%, #f8fbff 50%, #ffffff 100%);
+    padding: 20px;
+    margin-top: 62px;
+    box-sizing: border-box;
+}
+
+.user-caption {
+    font-size: 36px;
+    font-weight: 700;
+    text-align: center;
+    padding: 12px 0;
+    color: #004aad;
+    margin-bottom: 20px;
+    animation: fadeIn 0.4s ease;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.user-thead {
+    background: #0088ff;
+}
+
+.user-th {
+    padding: 14px;
+    color: white;
+    font-size: 16px;
+    text-align: left;
+}
+
+.user-td {
+    padding: 14px;
+    font-size: 15px;
+    color: #333;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.user-thead .user-tr:hover {
+    background: darkblue;
+    color: white;
+}
+.user-tbody .user-tr:hover{
+    background-color:#e0ecff;
+}
+
+/* Xóa border cuối */
+.user-tbody .user-tr:last-child .user-td {
+    border-bottom: none;
+}
+
+/* ===========================
+   BUTTON
+=========================== */
+.btn-role {
+    background-color: #007bff;
+    color: white;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-role:hover {
+    background-color: #0056b3;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+@media (max-width: 768px) {
+    .user-caption {
+        font-size: 28px;
+    }
+
+    .user-thead {
+        display: none; /* Ẩn header */
+    }
+
+    .user-table, 
+    .user-tbody, 
+    .user-tr, 
+    .user-td {
+        display: block;
+        width: 100%;
+    }
+
+    .user-tbody .user-tr {
+        background: #f8faff;
+        margin-bottom: 16px;
+        padding: 12px;
+        border-radius: 10px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    }
+
+    .user-td {
+        border: none !important;
+        padding: 10px 8px;
+        position: relative;
+    }
+
+    .user-td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #555;
+        display: block;
+        margin-bottom: 4px;
+        font-size: 14px;
+    }
+
+    .btn-role {
+        width: 100%;
+        margin-top: 8px;
+    }
+}

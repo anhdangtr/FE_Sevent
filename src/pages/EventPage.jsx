@@ -271,7 +271,7 @@ const EventPage = () => {
         </nav>
         <div className="error-state">
           <p>{error}</p>
-          <button onClick={() => navigate("/")} className="back-btn">
+          <button onClick={() => navigate("/")} className="ev-back-btn">
             Quay lại trang chủ
           </button>
         </div>
@@ -297,10 +297,10 @@ const EventPage = () => {
           <h1 className="event-title">{event.title}</h1>
 
           {/* Action Buttons */}
-          <div className="action-buttons">
-            <div className="buttons-left">
+          <div className="ev-action-buttons">
+            <div className="ev-buttons-left">
               <button
-                className={`like-btn ${isLiked ? "liked" : ""}`}
+                className={`ev-like-btn ${isLiked ? "liked" : ""}`}
                 onClick={handleLikeClick}
               >
                 <span className="heart-icon">
@@ -310,7 +310,7 @@ const EventPage = () => {
               </button>
 
               <button
-                className={`save-btn ${isSaved ? "saved" : ""}`}
+                className={`ev-save-btn ${isSaved ? "saved" : ""}`}
                 onClick={handleSaveClick}
               >
                 <span className="save-icon">
@@ -320,16 +320,16 @@ const EventPage = () => {
               </button>
             </div>
 
-            <div className="buttons-right">
+            <div className="ev-buttons-right">
               <button
-                className="action-btn reminder-btn"
+                className="ev-action-btn ev-reminder-btn"
                 onClick={() => setShowReminderModal(true)}
               >
                 Reminder
               </button>
 
               <button
-                className="action-btn register-btn"
+                className="ev-action-btn ev-register-btn"
                 onClick={handleRegisterClick}
                 disabled={!event.registrationFormUrl}
               >
@@ -393,7 +393,7 @@ const EventPage = () => {
 
           {/* Back Button */}
           <div className="back-button-section">
-            <button onClick={() => navigate("/")} className="back-btn">
+            <button onClick={() => navigate("/")} className="ev-back-btn">
               ← Quay lại
             </button>
           </div>

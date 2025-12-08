@@ -126,11 +126,29 @@ const Navbar = ({ activeNav, setActiveNav }) => {
                   <button
                     className="avatar-menu-item"
                     onClick={() => {
+                      navigate("/liked");
+                      closeAvatarMenu();
+                    }}
+                  >
+                    Liked event
+                  </button>
+                  <button
+                    className="avatar-menu-item"
+                    onClick={() => {
                       navigate("/saved");
                       closeAvatarMenu();
                     }}
                   >
                     Saved event
+                  </button>
+                  <button
+                    className="avatar-menu-item"
+                    onClick={() => {
+                      navigate("/liked");
+                      closeAvatarMenu();
+                    }}
+                  >
+                    Liked event
                   </button>
                   <button
                     className="avatar-menu-item"
@@ -146,7 +164,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
                     onClick={() => {
                       localStorage.removeItem("authToken");
                       localStorage.removeItem("user");
-                      window.location.reload();
+                      navigate("/");
                     }}
                   >
                     Logout
