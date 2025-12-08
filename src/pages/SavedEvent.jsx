@@ -5,7 +5,7 @@ import "./SavedEvent.css";
 import Navbar from "../components/Navbar";
 
 const SavedEvent = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [savedItems, setSavedItems] = useState([]);
   const [folders, setFolders] = useState([]);
   const [activeFolder, setActiveFolder] = useState(null);
@@ -22,7 +22,7 @@ const SavedEvent = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem("authToken");
-      const res = await axios.get(`${API_URL}/saved-events`, {
+      const res = await axios.get(`${API_URL}/api/saved-events`, {
         headers: { Authorization: `Bearer ${token}` }
       });
 
@@ -42,7 +42,7 @@ const SavedEvent = () => {
   const fetchFolders = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const res = await axios.get(`${API_URL}/saved-events/get-folders`, {
+      const res = await axios.get(`${API_URL}/api/saved-events/get-folders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.data.success) {
@@ -61,7 +61,7 @@ const SavedEvent = () => {
         return;
       }
       const token = localStorage.getItem("authToken");
-      const res = await axios.get(`${API_URL}/saved-events/folder/${encodeURIComponent(name)}`, {
+      const res = await axios.get(`${API_URL}/api/saved-events/folder/${encodeURIComponent(name)}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.data.success) {

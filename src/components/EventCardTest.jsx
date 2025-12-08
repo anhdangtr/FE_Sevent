@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./EventCardTest.css";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const EventCardTest = ({ event }) => {
   const navigate = useNavigate();
@@ -39,7 +39,7 @@ const EventCardTest = ({ event }) => {
 
       try {
         // Check like status
-        const likeRes = await fetch(`${API_URL}/events/${event._id}/check-liked`, {
+        const likeRes = await fetch(`${API_URL}/api/events/${event._id}/check-liked`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -76,7 +76,7 @@ useEffect(() => {
 
     try {
       // Check like status
-      const likeRes = await fetch(`${API_URL}/events/${event._id}/check-liked`, {
+      const likeRes = await fetch(`${API_URL}/api/events/${event._id}/check-liked`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -93,7 +93,7 @@ useEffect(() => {
       }
 
       // ========== THÊM: Check save status ==========
-      const saveRes = await fetch(`${API_URL}/events/${event._id}/check-saved`, {
+      const saveRes = await fetch(`${API_URL}/api/events/${event._id}/check-saved`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -183,7 +183,7 @@ const handleLike = async (e) => {
   // Đặt timeout mới - chờ 500ms rồi gửi API
   debounceTimeoutRef.current.like = setTimeout(async () => {
     try {
-      const res = await fetch(`${API_URL}/events/${event._id}/toggle-like`, {
+      const res = await fetch(`${API_URL}/api/events/${event._id}/toggle-like`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -231,7 +231,7 @@ const handleSave = async (e) => {
   //Đặt timeout mới - chờ 500ms rồi gửi API
   debounceTimeoutRef.current.save = setTimeout(async () => {
     try {
-      const res = await fetch(`${API_URL}/events/${event._id}/toggle-save`, {
+      const res = await fetch(`${API_URL}/api/events/${event._id}/toggle-save`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

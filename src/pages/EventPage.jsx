@@ -30,7 +30,7 @@ const EventPage = () => {
   const isLoggedIn = !!localStorage.getItem("authToken");
   const token = localStorage.getItem("authToken");
 
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
   // Debounce refs
   const likeTimeoutRef = useRef(null);
@@ -73,7 +73,7 @@ const EventPage = () => {
         return;
       }
 
-      const response = await axios.get(`${API_URL}/events/${eventId}`, {
+      const response = await axios.get(`${API_URL}/api/events/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -108,7 +108,7 @@ const EventPage = () => {
   const checkIfLiked = async () => {
     if (!isLoggedIn) return;
     try {
-      const resp = await axios.get(`${API_URL}/events/${eventId}/check-liked`, {
+      const resp = await axios.get(`${API_URL}/api/events/${eventId}/check-liked`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIsLiked(resp.data.isLiked);
@@ -120,7 +120,7 @@ const EventPage = () => {
   const checkIfSaved = async () => {
     if (!isLoggedIn) return;
     try {
-      const resp = await axios.get(`${API_URL}/events/${eventId}/check-saved`, {
+      const resp = await axios.get(`${API_URL}/api/events/${eventId}/check-saved`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setIsSaved(resp.data.isSaved);
@@ -152,7 +152,7 @@ const EventPage = () => {
     likeTimeoutRef.current = setTimeout(async () => {
       try {
         const resp = await axios.post(
-          `${API_URL}/events/${eventId}/toggle-like`,
+          `${API_URL}/api/events/${eventId}/toggle-like`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -184,7 +184,7 @@ const EventPage = () => {
     if (isSaved) {
       try {
         const resp = await axios.post(
-          `${API_URL}/events/${eventId}/toggle-save`,
+          `${API_URL}/api/events/${eventId}/toggle-save`,
           {},
           { headers: { Authorization: `Bearer ${token}` } }
         );

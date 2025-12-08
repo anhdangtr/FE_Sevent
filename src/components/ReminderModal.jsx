@@ -26,7 +26,7 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
 
   const fetchReminders = async () => {
     try {
-      const res = await axios.get(`${API_URL}/reminders/${eventId}`, {
+      const res = await axios.get(`${API_URL}/api/reminders/${eventId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setReminders(res.data.data || []);
@@ -36,15 +36,6 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     }
   };
 
-  // Check if day is in the past
-  const isPastDate = (day) => {
-    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    date.setHours(0, 0, 0, 0);
-    return date < today;
-  };
-
   const handleDateSelect = (day) => {
     const selected = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
     const today = new Date();
@@ -52,7 +43,7 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     today.setHours(0, 0, 0, 0);
     selected.setHours(0, 0, 0, 0);
 
-    if (selected < today) return; 
+    if (selected < today) return;
 
     setSelectedDate(selected);
   };
@@ -76,12 +67,10 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
       return;
     }
 
-    // Check for duplicate time
     const reminderDateTime = new Date(selectedDate);
     const [hours, minutes] = selectedTime.split(':');
     reminderDateTime.setHours(parseInt(hours), parseInt(minutes));
 
-        // Validate future time
     if (reminderDateTime <= new Date()) {
       setError('Vui lòng chọn thời gian trong tương lai');
       return;
@@ -99,16 +88,14 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
 
     try {
       setLoading(true);
-      const payload = {
+      await axios.post(`${API_URL}/api/reminders`, {
         eventId,
         reminderDateTime,
         note
-      };
-      await axios.post(`${API_URL}/reminders`, payload, {
+      }, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
-      // Refresh reminders
+
       fetchReminders();
       setSelectedDate(null);
       setSelectedTime('09:00');
@@ -123,7 +110,7 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
 
   const handleDeleteReminder = async (reminderId) => {
     try {
-      await axios.delete(`${API_URL}/reminders/${reminderId}`, {
+      await axios.delete(`${API_URL}/api/reminders/${reminderId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchReminders();
@@ -143,14 +130,13 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
   const renderCalendar = () => {
     const daysInMonth = getDaysInMonth(currentMonth);
     const firstDay = getFirstDayOfMonth(currentMonth);
+
     const days = [];
 
-    // Empty cells before month starts
     for (let i = 0; i < firstDay; i++) {
       days.push(<div key={`empty-${i}`} className="calendar-empty"></div>);
     }
 
-    // Days of month
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), i);
       const today = new Date();
@@ -175,17 +161,6 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     return days;
   };
 
-  const renderTimeOptions = () => {
-    const times = [];
-    for (let h = 0; h < 24; h++) {
-      for (let m = 0; m < 60; m += 15) {
-        const timeStr = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-        times.push(timeStr);
-      }
-    }
-    return times;
-  };
-
   const formatReminderTime = (dateStr) => {
     const date = new Date(dateStr);
     return date.toLocaleString('vi-VN', {
@@ -203,12 +178,14 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
     <div className="reminder-modal-overlay">
       <div className="reminder-modal">
         <div className="reminder-modal-content">
-          {/* Left Panel */}
+
+          {/* LEFT SIDE */}
           <div className="reminder-left-panel">
             <div className="reminder-event-title">{eventTitle}</div>
-            
+
             <div className="reminder-list-container">
               <h3>Reminders đã đặt</h3>
+
               {reminders.length === 0 ? (
                 <p className="no-reminders">Chưa có reminder nào</p>
               ) : (
@@ -216,7 +193,11 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
                   {reminders.map(r => (
                     <li key={r._id} className="reminder-item">
                       <div className="reminder-item-time">{formatReminderTime(r.reminderDateTime)}</div>
-                      {r.note && <div className="reminder-item-note">{r.note}</div>}
+
+                      {r.note && (
+                        <div className="reminder-item-note">{r.note}</div>
+                      )}
+
                       <button
                         className="reminder-delete-btn"
                         onClick={() => handleDeleteReminder(r._id)}
@@ -240,10 +221,10 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
             </div>
           </div>
 
-          {/* Right Panel - Calendar & Time Picker */}
+          {/* RIGHT SIDE */}
           <div className="reminder-right-panel">
             <h3>Chọn ngày & giờ</h3>
-            
+
             <div className="calendar-header">
               <button onClick={handlePrevMonth}>&lt;</button>
               <span>{currentMonth.toLocaleDateString('vi-VN', { month: 'long', year: 'numeric' })}</span>
@@ -261,10 +242,7 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
 
             <div className="time-picker-container">
               <label>Giờ</label>
-              <TimeRollPicker
-                value={selectedTime}
-                onChange={(val) => setSelectedTime(val)}
-              />
+              <TimeRollPicker value={selectedTime} onChange={(v) => setSelectedTime(v)} />
             </div>
 
             {selectedDate && (
@@ -275,14 +253,12 @@ const ReminderModal = ({ eventId, eventTitle, isOpen, onClose, API_URL, token })
           </div>
         </div>
 
-        {/* Error Message */}
         {error && <div className="reminder-error">{error}</div>}
 
-        {/* Footer Buttons */}
         <div className="reminder-modal-footer">
           <button className="reminder-back-btn" onClick={onClose}>← Trở về</button>
-          <button 
-            className="reminder-set-btn" 
+          <button
+            className="reminder-set-btn"
             onClick={handleSetReminder}
             disabled={loading || reminders.length >= MAX_REMINDERS}
           >

@@ -4,7 +4,7 @@ import logoImage from "../assets/logo.png";
 import "./Navbar.css";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
 const Navbar = ({ activeNav, setActiveNav }) => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Navbar = ({ activeNav, setActiveNav }) => {
       const fetchUserProfile = async () => {
         try {
           const token = localStorage.getItem("authToken");
-          const response = await fetch(`${API_URL}/info/${user.id}/profile`, {
+          const response = await fetch(`${API_URL}/api/info/${user.id}/profile`, {
             headers: {
               'Authorization': `Bearer ${token}`
             }

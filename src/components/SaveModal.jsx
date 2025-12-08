@@ -23,7 +23,7 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token, onSaveSuccess }) 
   const fetchFolders = async () => {
     try {
       setFolderLoading(true);
-      const response = await axios.get(`${API_URL}/saved-events/get-folders`, {
+      const response = await axios.get(`${API_URL}/api/saved-events/get-folders`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setFolders(response.data.folders || []);
@@ -45,7 +45,7 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token, onSaveSuccess }) 
     try {
       setLoading(true);
       const response = await axios.post(
-        `${API_URL}/saved-events/post-folders`,
+        `${API_URL}/api/saved-events/post-folders`,
         { folderName: newFolderName.trim() },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -76,7 +76,7 @@ const SaveModal = ({ eventId, isOpen, onClose, API_URL, token, onSaveSuccess }) 
         folderName: folderToSave
       };
 
-      const response = await axios.post(`${API_URL}/saved-events`, payload, {
+      const response = await axios.post(`${API_URL}/api/saved-events`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       });
 

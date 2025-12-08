@@ -10,7 +10,7 @@ function User() {
     const [totalPages, setTotalPages] = useState(1);
     const [activeNav, setActiveNav] = useState("user");
 
-    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
 
     useEffect(() => {
         fetchUser();
@@ -18,7 +18,7 @@ function User() {
 
     const fetchUser = async () => {
         try {
-            const res = await fetch(`${API_URL}/user/getAllUser?page=${page}&search=${search}`);
+            const res = await fetch(`${API_URL}/api/user/getAllUser?page=${page}&search=${search}`);
             
             if (!res.ok) {
                 console.error(`API Error: ${res.status} ${res.statusText}`);
@@ -43,11 +43,11 @@ function User() {
         
         if (!token) {
             alert("Bạn chưa đăng nhập!");
-            window.location.href = "/auth/LogIn";
+            window.location.href = "api/auth/LogIn";
             return;
         }
 
-        const res = await fetch(`${API_URL}/user/updateRoleUser/${id}`, {
+        const res = await fetch(`${API_URL}/api/user/updateRoleUser/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -63,7 +63,7 @@ function User() {
         if (res.status === 401) {
             alert("Token hết hạn! Vui lòng đăng nhập lại.");
             localStorage.removeItem("authToken");   
-            window.location.href = "/auth/LogIn";  
+            window.location.href = "api/auth/LogIn";  
             return;
         }
 
@@ -79,7 +79,7 @@ function User() {
             alert("Bạn vừa thay đổi quyền. Hệ thống sẽ đăng xuất bạn.");
 
             localStorage.removeItem("authToken");      
-            window.location.href = "/auth/LogIn";      
+            window.location.href = "api/auth/LogIn";      
             return;
         }
 

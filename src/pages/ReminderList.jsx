@@ -25,7 +25,7 @@ const ReminderList = () => {
       }
 
       // Fetch many events (limit to 200 to avoid huge requests)
-      const eventsRes = await axios.get(`${API_URL}/events`, { params: { limit: 200 } });
+      const eventsRes = await axios.get(`${API_URL}/api/events`, { params: { limit: 200 } });
       if (!eventsRes.data.success) {
         setItems([]);
         setLoading(false);
@@ -38,7 +38,7 @@ const ReminderList = () => {
       const checks = await Promise.all(
         events.map(async (ev) => {
           try {
-            const res = await axios.get(`${API_URL}/reminders/${ev._id}`, {
+            const res = await axios.get(`${API_URL}/api/reminders/${ev._id}`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             if (res.data.success && res.data.data && res.data.data.length > 0) {

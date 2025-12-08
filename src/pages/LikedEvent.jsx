@@ -5,7 +5,7 @@ import "./LikedEvent.css";
 import Navbar from "../components/Navbar";
 
 const LikedEvent = () => {
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const [likedEvents, setLikedEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeNav, setActiveNav] = useState("home");
@@ -27,7 +27,7 @@ const LikedEvent = () => {
       }
 
       // Fetch a large list of events and check like status per event
-      const eventsRes = await axios.get(`${API_URL}/events`, { params: { limit: 200 } });
+      const eventsRes = await axios.get(`${API_URL}/api/events`, { params: { limit: 200 } });
       if (!eventsRes.data.success) {
         setLikedEvents([]);
         setLoading(false);
@@ -40,7 +40,7 @@ const LikedEvent = () => {
       const checks = await Promise.all(
         events.map(async (ev) => {
           try {
-            const res = await axios.get(`${API_URL}/events/${ev._id}/check-liked`, {
+            const res = await axios.get(`${API_URL}/api/events/${ev._id}/check-liked`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             if (res.data.success && res.data.isLiked) return ev;
