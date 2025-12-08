@@ -87,7 +87,7 @@
 .auth-buttons {
   display: flex;                                  /* Horizontal layout */
   align-items: center;                            /* Vertically center */
-  gap: 80px;                                      /* Increased space between Log in and Sign up */
+  gap: 10px;                                      /* Increased space between Log in and Sign up */
   flex-shrink: 0;                                 /* Never shrink */
 }
 

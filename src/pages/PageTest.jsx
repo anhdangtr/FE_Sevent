@@ -131,9 +131,7 @@ const PageTest = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   className="search-input"
                 />
-                <button type="submit" className="search-btn">
-                  Search
-                </button>
+                
               </form>
             </div>
           </section>

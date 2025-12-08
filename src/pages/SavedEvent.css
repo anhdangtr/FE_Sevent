@@ -1,31 +1,61 @@
+.saved-page {
+  height: 100vh;
+  width: 100vw;
+  background: #f5f5f5;
+}
+
 .saved-banner, .liked-banner {
-  background: #0586d6; /* similar blue banner */
+  background: linear-gradient(135deg,#FFE047 5%, #004AAD 50%, #0066cc 75%, #0088ff 100%);
   color: #fff;
-  padding: 28px 0;
+  padding: 45px 0;
   margin-bottom: 24px;
 }
 
 .saved-banner h1, .liked-banner h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
 .saved-content, .liked-content {
-  padding-bottom: 40px;
-}
-
-.saved-cards, .liked-cards {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
+  padding: 40px 0;
 }
 
 .section-title {
-  margin: 16px 0;
+  margin: 24px 0 20px 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+}
+
+.saved-cards, .liked-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.saved-cards > *, .liked-cards > * {
+  width: 100%;
 }
 
 .folders-section {
-  margin-top: 32px;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.folders-section h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
 }
 
 .folder-list {
@@ -34,19 +64,104 @@
   gap: 12px;
 }
 
+.folder-item {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .folder-btn {
-  background: transparent;
-  border: 1px solid #ddd;
-  padding: 12px;
+  background: white;
+  border: none;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
   width: 100%;
   text-align: left;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
-.folder-icon { font-size: 22px; }
-.folder-name { font-weight: 600; }
-.folder-count { margin-left: auto; color: #666; }
+.folder-btn:hover {
+  background: #f9f9f9;
+}
 
-.folder-events { margin-top: 12px; display:flex; gap:12px; flex-wrap:wrap; }
+.folder-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.folder-name {
+  font-weight: 600;
+  color: #333;
+  flex: 1;
+}
+
+.folder-count {
+  color: #999;
+  font-size: 14px;
+  background: #f0f0f0;
+  padding: 4px 12px;
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.folder-events {
+  padding: 20px;
+  border-top: 1px solid #f0f0f0;
+  background: #fafafa;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.folder-events > * {
+  width: 100%;
+}
+
+/* Tablet */
+@media (max-width: 1200px) {
+  .saved-cards, .liked-cards,
+  .folder-events {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Small tablet */
+@media (max-width: 768px) {
+  .saved-cards, .liked-cards,
+  .folder-events {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .saved-banner h1, .liked-banner h1 {
+    font-size: 24px;
+  }
+
+  .section-title {
+    font-size: 20px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .saved-cards, .liked-cards,
+  .folder-events {
+    grid-template-columns: 1fr;
+  }
+
+  .container {
+    padding: 0 16px;
+  }
+
+  .saved-banner, .liked-banner {
+    padding: 32px 0;
+    margin-bottom: 16px;
+  }
+
+  .saved-banner h1, .liked-banner h1 {
+    font-size: 20px;
+  }
+}

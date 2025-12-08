@@ -6,9 +6,9 @@ import { FaFacebookF, FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa
 import Navbar from "../components/Navbar";
 
 function Contact() {
+
   return (
     <div className="contact-page">
-      <Navbar />
       <div className="contact-container">
       {/* Hero Header */}
       <div className="contact-header">

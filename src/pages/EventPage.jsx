@@ -26,7 +26,7 @@ const EventPage = () => {
   const token = localStorage.getItem("authToken");
 
   const location = useLocation();
-  
+
   // Debounce refs
   const likeTimeoutRef = useRef(null);
   const saveTimeoutRef = useRef(null);
@@ -386,7 +386,9 @@ const EventPage = () => {
             )}
             {event.content && (
               <div className="full-description">
-                <p>{event.content}</p>
+                {event.content.split("\n").map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
               </div>
             )}
           </div>

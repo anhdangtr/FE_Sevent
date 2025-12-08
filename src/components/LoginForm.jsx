@@ -28,6 +28,13 @@ const smallLinkStyle = {
   fontSize: '13px'
 };
 
+const registerLink = {
+   color: '#333',
+    font: '14px Arial, Helvetica, sans-serif',
+    textAlign: 'center',
+    marginTop: '40px',
+}
+
 const LoginForm = () => {
   const [form, setForm] = useState({ email: '', password: '' });
   const [errors, setErrors] = useState({});
@@ -113,6 +120,10 @@ const LoginForm = () => {
       <a href="/forgot" style={smallLinkStyle}>Forgot password?</a>
 
       <button type="submit" style={buttonStyle}>Log in</button>
+      <br />
+       <p style={registerLink}>
+         Don't have an account? <a href="/auth/SignUp">Sign up</a>
+        </p>
     </form>
   );
 };

@@ -20,6 +20,13 @@ const buttonStyle = {
   cursor: 'pointer'
 };
 
+const loginLink = {
+    color: '#333',
+    font: '14px Arial, Helvetica, sans-serif',
+    textAlign: 'center',
+    marginTop: '40px',
+};  
+
 const SignUpForm = () => {
   const [form, setForm] = useState({ name: '', email: '', password: '', passwordConfirm: '' });
   const [errors, setErrors] = useState({});
@@ -128,6 +135,10 @@ const SignUpForm = () => {
       />
 
       <button type="submit" style={buttonStyle}>Create</button>
+      <br />
+        <p style={loginLink}>
+          Already have an account? <a href="/auth/LogIn">Login</a>
+        </p>
     </form>
   );
 };

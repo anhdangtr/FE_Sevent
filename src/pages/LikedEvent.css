@@ -6,15 +6,16 @@
 }
 
 .liked-banner {
-  background: #004AAD;
+  background: linear-gradient(135deg,#FFE047 0%, #004AAD 50%, #0066cc 75%, #0088ff 100%);
   color: #fff;
-  padding: 28px 0;
+  padding: 45px 0;
   margin-bottom: 24px;
 }
 
 .liked-banner h1 { 
   margin: 0; 
   font-size: 28px; 
+  text-align: center;
 }
 
 .container {
