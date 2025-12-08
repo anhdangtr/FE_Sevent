@@ -22,7 +22,7 @@ const PageTest = () => {
   const [activeNav, setActiveNav] = useState("home");
 
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+  const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
   const LIMIT = 9;
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const PageTest = () => {
         category: category !== "all" ? category : undefined,
       };
 
-      const response = await axios.get(`${API_URL}/events`, { params });
+      const response = await axios.get(`${API_URL}/api/events`, { params });
 
       if (response.data.success) {
         setEvents(response.data.data);
@@ -58,7 +58,7 @@ const PageTest = () => {
 
   const fetchTrendingEvents = async () => {
     try {
-      const response = await axios.get(`${API_URL}/events/trending`, {
+      const response = await axios.get(`${API_URL}/api/events/trending`, {
         params: { limit: 4 },
       });
 
