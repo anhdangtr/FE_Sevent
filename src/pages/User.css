@@ -1,5 +1,5 @@
 .user-container {
-    width: 100%;
+    width: 100vw;
     min-height: calc(100vh - 60px);
     background: linear-gradient(135deg, #e0ecff 0%, #f8fbff 50%, #ffffff 100%);
     padding: 20px;
