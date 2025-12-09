@@ -23,7 +23,7 @@ const PageTest = () => {
 
   const navigate = useNavigate();
   const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  const LIMIT = 9;
+  const LIMIT = 8;
 
   useEffect(() => {
     fetchEvents();
